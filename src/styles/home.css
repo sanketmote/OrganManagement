@@ -1,0 +1,201 @@
+.container {
+    min-height: 100vh;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+  }
+  
+
+  .main {
+    padding: 5rem 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cardpay {
+    margin: 1rem;
+    text-align: center;
+    justify-content: center;
+    /* box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); */
+    transition: 0.3s;
+    width: 40%;
+    border-radius: 5px;
+  }
+  
+  .footer {
+    width: 100%;
+    height: 100px;
+    border-top: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .footer a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+  }
+  
+  .title a {
+    color:black;
+    text-decoration: none;
+  }
+  
+  .title a:hover,
+  .title a:focus,
+  .title a:active {
+    text-decoration: underline;
+  }
+  
+  .title {
+    color: black;
+    margin: 0;
+    line-height: 1.15;
+    font-size: 4rem;
+  }
+  
+  .title,
+  .description {
+    text-align: center;
+  }
+  
+  .description {
+    line-height: 1.5;
+    font-size: 1.5rem;
+    color: black;
+  }
+  
+  .code {
+    background:black;
+    border-radius: 5px;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+      Bitstream Vera Sans Mono, Courier New, monospace;
+  }
+  
+  .grid {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin-top: 3rem;
+    margin: 0;
+    position: relative;
+    /* top: 50%; */
+    left: 25%;
+    /* -ms-transform: translate(-50%, -50%); */
+    /* transform: translate(-50%, -50%); */
+  }
+  
+  .card {
+    color: black!important;
+    display: block;
+    margin: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+    width: 45%;
+    cursor:pointer;
+  }
+  
+  .card:hover,
+  .card:focus,
+  .card:active {
+    color: #0070f3;
+    border-color: #0070f3;
+  }
+  
+  .card h2 {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+  }
+  
+  .card p {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.5;
+  }
+  
+  .logo {
+    height: 1em;
+    margin-left: 0.5rem;
+  }
+
+  .payBtn {
+   display: flex;
+   justify-content: center;
+  padding-bottom: 15px;
+}
+
+  
+  @media (max-width: 600px) {
+    .grid {
+      width: 100%;
+      flex-direction: column;
+    }
+  }
+  
+
+  .center {
+    margin: 0;
+    position: inherit;
+    display: block;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  .center button {
+    position: relative;
+    display: block;
+    margin:20px auto;
+    padding: 20px;
+    width: 300px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.5s;
+    background-color: #04d6f5ad;
+    color: #fff;
+    font-size:20px;
+    
+  }
+
+  .center span {
+    cursor: pointer;
+    display:inline-block;
+    position: relative;
+    transition: 00.5s;
+  }
+  .center button span::after{
+    content:'\00bb';
+    position: absolute;
+    opacity: 0;
+    top:0;
+    right: -30px;
+    transition: 0.5s;
+  }
+
+  .center button:hover{
+    padding-right: 45px;
+  }
+
+  .center button:hover span::after {
+    opacity: 1;
+    right:-15px;
+  }
