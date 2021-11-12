@@ -1,11 +1,14 @@
 .App {
   text-align: center;
+  background-color: black;
+  box-sizing: unset; 
+
 }
 
 .App-logo {
   /* height: 40vmin; */
   /* width: 100; */
-  background-image: url(backgroundhome.jpg);
+  background-image: url(./Images/backgroundhome.jpg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   

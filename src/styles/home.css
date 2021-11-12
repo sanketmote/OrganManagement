@@ -1,3 +1,7 @@
+* {
+	box-sizing: unset; 
+}
+
 .container {
     min-height: 100vh;
     padding: 0 0.5rem;
@@ -194,7 +198,12 @@
   .center button:hover{
     padding-right: 45px;
   }
-
+.center button a {
+  color: #fff;
+	font-size: 20px;
+	line-height: auto !important;
+	transition: all 0.5s;
+}
   .center button:hover span::after {
     opacity: 1;
     right:-15px;

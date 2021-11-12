@@ -1,3 +1,18 @@
+.background-image {
+  background-image: url('../Images/bg-01.jpg')!important;
+}
+
+* {
+	margin: 0px; 
+	padding: 0px; 
+	box-sizing: border-box;
+}
+
+body, html {
+	height: 100%;
+	font-family: Poppins-Regular, sans-serif;
+}
+
 .base-container {
     width: 100%;
     display: flex;
