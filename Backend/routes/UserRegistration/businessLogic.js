@@ -30,7 +30,7 @@ const UserReg = async function (req,res) {
                     res.send(err);
                 })
         } catch (err) {
-            console.log('Error catched in Get Payments: ' + err.name + " : " + err.message);
+            console.log('Error catched in User Hospital: ' + err.name + " : " + err.message);
 
             // microServiceResponse.MicroserviceErrorResponseListForUI.push(err.message);
             // microServiceResponse.MicroserviceErrorResponseList.push(err);

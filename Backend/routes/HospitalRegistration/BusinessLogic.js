@@ -30,7 +30,7 @@ const HospitalReg = async function (req,res) {
                     res.send(err);
                 })
         } catch (err) {
-            console.log('Error catched in Get Payments: ' + err.name + " : " + err.message);
+            console.log('Error catched in Hpspital Registration : ' + err.name + " : " + err.message);
 
             // microServiceResponse.MicroserviceErrorResponseListForUI.push(err.message);
             // microServiceResponse.MicroserviceErrorResponseList.push(err);
