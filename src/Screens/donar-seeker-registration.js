@@ -20,36 +20,36 @@ export class DRegister extends React.Component {
                 User Registeration
               </span>
 
-              <div class="wrap-input100 validate-input m-b-23" data-validate="First Name is reauired">
-                <span class="label-input100" >First Name</span>
-                <input class="input100" type="text" name="fname" placeholder="Type your First Name" autocomplete="off" />
+              <div class="wrap-input100 validate-input m-b-23" data-validate="Full Name is reauired">
+                <span class="label-input100" >Full Name</span>
+                <input class="input100" type="text" name="fname" placeholder="Type your Full Name" autocomplete="off" required />
                 <span class="focus-input100" data-symbol="&#xf206;"></span>
               </div>
 
 
-              <div class="wrap-input100 validate-input m-b-23" data-validate="Last Name is reauired">
-                <span class="label-input100">Last Name</span>
-                <input class="input100" type="text" name="lname" placeholder="Type your Last Name" autocomplete="off" />
+              <div class="wrap-input100 validate-input m-b-23" data-validate="Email is reauired">
+                <span class="label-input100">Email</span>
+                <input class="input100" type="text" name="email" placeholder="Type your Email" autocomplete="off" required />
                 <span class="focus-input100" data-symbol="&#xf206;"></span>
               </div>
 
-              <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
-                <span class="label-input100">Username</span>
-                <input class="input100" type="text" name="username" placeholder="Type your username" autocomplete="off" />
+              <div class="wrap-input100 validate-input m-b-23" data-validate="mobile no is reauired">
+                <span class="label-input100">Mobile No</span>
+                <input class="input100" type="tel" name="mobile" placeholder="Type your mobile no" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" autocomplete="off" required />
                 <span class="focus-input100" data-symbol="&#xf206;"></span>
               </div>
 
               <div class="wrap-input100 validate-input" data-validate="Password is required">
                 <span class="label-input100">Enter Password</span>
                 <input class="input100" id="password" type="password" name="pass" placeholder="Type your password" autocomplete="off" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-                  title="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character" />
+                  title="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character" required />
 
                 <span class="focus-input100" data-symbol="&#xf190;"></span>
               </div>
 
               <div class="wrap-input100 validate-input form-group has-feedback cp" id="message1" data-validate="Password is required">
                 <span class="label-input100">Confirm Password</span>
-                <input class="input100" id="confirm_password" type="password" name="pass1" placeholder="Type your Confirm password" autocomplete="off" />
+                <input class="input100" id="confirm_password" type="password" name="pass1" placeholder="Type your Confirm password" autocomplete="off" required />
                 <span class="focus-input100" data-symbol="&#xf190;"></span>
                 <span class="glyphicon  form-control-feedback" id="message2"></span>
               </div>
@@ -71,7 +71,7 @@ export class DRegister extends React.Component {
                 Already have an account?
               </span>
 
-              <a href="/" class="txt2">
+              <a href="/login" class="txt2">
                 Log in
               </a>
             </div>
