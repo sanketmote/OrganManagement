@@ -7,7 +7,7 @@ import axios from 'axios';
 export class Login extends React.Component {
   constructor(props) {
     super(props); this.state = {
-      role: '',
+      role: 'users',
       email: '',
       password: '',
     }
@@ -45,25 +45,37 @@ export class Login extends React.Component {
   onSubmit(event) {
     event.preventDefault()
 
-    const login = {
+    const loginval = {
       role: this.state.role,
       email: this.state.email,
       // metamaskid: this.state.metamaskid,
       password: this.state.password,
     }
 
-    axios.post('http://localhost:4000/login/', login)   /// After Hosting change to hosted backend name
-      .then(res => { console.log(res) })
-
-    window.location = '/user'
-
+    console.log("hii",loginval)
+    axios.post('http://localhost:4000/login/',loginval)   /// After Hosting change to hosted backend name
+      .then(res => { 
+        console.log(res);
+        if(!res.data.error){
+          if(loginval.role === 'users'){
+            window.location = '/user'
+          } 
+          if(loginval.role === 'Hospitals'){
+            window.location = '/huser' //#endregion
+          }
+        } else {
+          alert("Invalid User Email id and Password for "+ loginval.role + " Login");
+        }
+        
+      })
+      .catch(err => console.log(err));
   }
   render() {
     return (
       <div className="limiter reglog">
         <div className="container-login100 background-image">
           <div className="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-            <form method="POST" action="/" onSubmit={this.onSubmit} className="login100-form validate-form">
+            <form method="get" action="/login" onSubmit={this.onSubmit} className="login100-form validate-form">
               <span className="login100-form-title p-b-49">
                 Login
               </span>
@@ -80,15 +92,15 @@ export class Login extends React.Component {
 
               <div className="wrap-input100 validate-input m-b-23" data-validate="Email is reauired">
                 <span className="label-input100">Email </span>
-                <input className="input100" type="email" name="email" placeholder="Type your Email" autocomplete="off" 
-                onChange={this.changeemail} value={this.state.email} required />
+                <input className="input100" type="email" name="email" placeholder="Type your Email" autocomplete="off"
+                  onChange={this.changeemail} value={this.state.email} required />
                 <span className="focus-input100" data-symbol="&#xf206;"></span>
               </div>
 
               <div className="wrap-input100 validate-input" data-validate="Password is required">
                 <span className="label-input100">Password</span>
-                <input className="input100" type="password" name="pass" placeholder="Type your password" 
-                onChange={this.changepassword} value={this.state.password} required />
+                <input className="input100" type="password" name="pass" placeholder="Type your password"
+                  onChange={this.changepassword} value={this.state.password} required />
                 <span className="focus-input100" data-symbol="&#xf190;"></span>
               </div>
 

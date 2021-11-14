@@ -4,7 +4,7 @@ const router = express.Router();
 const BusinessLogic = require('./BusinessLogic');
 
 
-router.get('/', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     var controllerSuccess = true;
     try {
         console.log(req.body);
@@ -14,9 +14,13 @@ router.get('/', async (req, res, next) => {
            controllerSuccess = false;
            res.statusCode = 500;
            res.json(businessLogicResponse.ErrorResponse);
-       } else {
-            res.statusCode = 200;   
-            res.send("ok");
+       } else { 
+            // res.send("ok");
+            // if(res.statusCode == 200){
+                res.send("Data Found");
+            // } else {
+                // res.send("Error: " + res)
+            // }
        }
 
     } catch (e) {

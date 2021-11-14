@@ -73,10 +73,18 @@ export class DRegister extends React.Component {
       password: this.state.password,
     }
 
-    axios.post('http://localhost:4000/ur/',registration)   /// After Hosting change to hosted backend name
-    .then(res => {console.log(res)})
-    
-    window.location = '/user'
+    axios.post('http://localhost:4000/ur/', registration)   /// After Hosting change to hosted backend name
+      .then(res => {
+        if (!(res.data.index === 0)) {
+          window.location('/huser');
+        } else {
+          alert("Invalid Data or Duplicate data");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        alert("Error" + err);
+      });
 
   }
 
@@ -110,7 +118,7 @@ export class DRegister extends React.Component {
               <div class="wrap-input100 validate-input m-b-23" data-validate="mobile no is reauired">
                 <span class="label-input100">Mobile No</span>
                 <input class="input100" type="tel" name="mobile" placeholder="Type your mobile no"
-                   autocomplete="off" required
+                  autocomplete="off" required
                   onChange={this.changeno} value={this.state.mobileno} />
                 <span class="focus-input100" data-symbol="&#xf206;"></span>
               </div>
