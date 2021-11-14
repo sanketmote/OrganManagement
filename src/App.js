@@ -8,7 +8,7 @@ import {
 import React from 'react'
 import { Login, DRegister,HRegister } from "./Screens/index";
 import HomePage from './Screens/HomePage'
-
+import User from "./User"
 export default function App() {
   return (
     <div>
@@ -18,6 +18,9 @@ export default function App() {
           <Switch>
             <Route path="/login">
               <Login />
+            </Route>
+            <Route path="/user">
+              <User />
             </Route>
             <Route path="/DRegister">
               <DRegister />
