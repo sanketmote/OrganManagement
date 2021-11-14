@@ -4,6 +4,7 @@
 /node_modules
 /Backend/node_modules
 /Backend/.env
+/Backend/config/auth.config.js
 /.pnp
 .pnp.js
 

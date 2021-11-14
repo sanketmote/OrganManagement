@@ -1,20 +1,25 @@
 const express = require('express');
+const bodyParser = require("body-parser");
 const app = express();
 const mongoose = require('mongoose');
-var mongoUtil = require( 'mongoUtil' );
+var mongoUtil = require('mongoUtil');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const mongodbutil  = require('./config/database');
+const mongodbutil = require('./config/database');
 
 app.use(express.json());
 app.use(cors());
 dotenv.config();
+app.use(bodyParser.json());
 
-mongodbutil.connectToServer( function( err, client ) {
-    if (err) console.log(err);
-    // start the rest of your app here
-    console.log("Database connected!");
-  } );
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+mongodbutil.connectToServer(function (err, client) {
+  if (err) console.log(err);
+  // start the rest of your app here
+  console.log("Database connected!");
+});
 // mongoose.connect(process.env.DATABASE_ACCESS, {
 //     useNewUrlParser: true,
 //     useUnifiedTopology: true,

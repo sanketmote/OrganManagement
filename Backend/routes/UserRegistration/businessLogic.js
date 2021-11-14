@@ -1,6 +1,7 @@
 const MicroServiceResponse = require('../../handler/ResponseModels/MicroServiceResponse');
 var UserRegistration = require('../../handler/DataBaseModel/UserSchema');
 // const mongodbutil = require('../../config/database');
+var bcrypt = require("bcryptjs");
 
 const UserReg = async function (req,res) {
     return await new Promise((resolve, reject) => {
@@ -13,7 +14,7 @@ const UserReg = async function (req,res) {
                 mobileno: req.body.mobileno,
                 email: req.body.email,
                 metamaskid:req.body.metamaskid,
-                password: req.body.password,
+                password: bcrypt.hashSync(req.body.password,8),
             });
 
             // console.log("Ok 2");

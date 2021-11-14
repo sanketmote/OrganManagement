@@ -28,14 +28,20 @@ const UserSchema = new mongoose.Schema({
     },
     metamaskid:{
         type: String,
-        allowNull: false,
-        required: true,
         unique: true,
     },
     password: {
         type: String,
         allowNull: false,
         required: true
+    },
+    isadmin: {
+        type: Boolean,
+        default: false
+    },
+    role:{
+        type: String,
+        default: 'users'
     },
     date: {
         type: Date,
