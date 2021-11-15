@@ -9,10 +9,12 @@ let _db
 module.exports = {
   connectToServer: async function (callback) {
     try {
+      console.log("Connecting to DataBase...");
       await mongoose.connect(process.env.DATABASE_ACCESS, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       }, (err, client) => {
+        console.log("Almost Connected to DataBase");
         // _db = client.db("organmanagement")
         return callback(err)
       })
@@ -20,7 +22,7 @@ module.exports = {
       throw e
     }
   },
-  getDB: function (){
+  getDB: function () {
     return _db;
   }
 }

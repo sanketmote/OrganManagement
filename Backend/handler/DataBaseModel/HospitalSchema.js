@@ -37,6 +37,10 @@ const HospitalSchema = new mongoose.Schema({
         allowNull: false,
         required: true
     },
+    role:{
+        type: String,
+        default: 'Hospitals'
+    },
     date: {
         type: Date,
         default: Date.now
