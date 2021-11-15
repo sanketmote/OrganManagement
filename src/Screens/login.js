@@ -56,12 +56,12 @@ export class Login extends React.Component {
     axios.post('http://localhost:4000/login/',loginval)   /// After Hosting change to hosted backend name
       .then(res => { 
         console.log(res);
-        if(!res.data.error){
+        if(!res.data.message){
           if(loginval.role === 'users'){
             window.location = '/user'
           } 
           if(loginval.role === 'Hospitals'){
-            window.location = '/huser' //#endregion
+            window.location = '/HDashboard' //#endregion
           }
         } else {
           alert("Invalid User Email id and Password for "+ loginval.role + " Login");

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const BusinessLogic = require('./BusinessLogic');
+const BusinessLogic = require('./businessLogic');
 
 
 router.post('/', async (req, res, next) => {
@@ -15,8 +15,7 @@ router.post('/', async (req, res, next) => {
            res.statusCode = 500;
            res.json(businessLogicResponse.ErrorResponse);
        } else {
-            res.statusCode = 200;   
-            res.send("ok");
+            console.log("Data Saved");
        }
 
     } catch (e) {

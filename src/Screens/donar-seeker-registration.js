@@ -4,7 +4,7 @@ import React from "react";
 // import loginImg from "../../login.svg";
 import "../styles/Registration-login.scss";
 import axios from 'axios';
-
+import instance from "../Etherium/contrctInstance";
 export class DRegister extends React.Component {
   constructor(props) {
     super(props);
@@ -64,7 +64,7 @@ export class DRegister extends React.Component {
 
   onSubmit(event) {
     event.preventDefault()
-
+    // await instance.methods.creatRequestDonar(this.state.metamaskid,this.state.metamaskhospitalid,this.state.organ,this.state.bloodgro)
     const registration = {
       fullName: this.state.fullName,
       mobileno: this.state.mobileno,
@@ -75,15 +75,18 @@ export class DRegister extends React.Component {
 
     axios.post('http://localhost:4000/ur/', registration)   /// After Hosting change to hosted backend name
       .then(res => {
-        if (!(res.data.index === 0)) {
-          window.location('/huser');
+        console.log(res);
+        if (!res.data.message) {
+          var link = '/login'
+          window.location.href = link;
         } else {
-          alert("Invalid Data or Duplicate data");
+          alert(res.data.message);
         }
+
       })
       .catch(err => {
         console.log(err);
-        alert("Error" + err);
+        alert("Err -> " + err);
       });
 
   }
@@ -153,7 +156,7 @@ export class DRegister extends React.Component {
                 <div class="wrap-login100-form-btn">
                   <div class="login100-form-bgbtn"></div>
                   <button class="login100-form-btn" type="submit" name="submit" value="info">
-                    Verify
+                    Register
                   </button>
                 </div>
               </div>

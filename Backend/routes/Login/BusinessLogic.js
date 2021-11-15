@@ -1,7 +1,7 @@
 const MicroServiceResponse = require('../../handler/ResponseModels/MicroServiceResponse');
 var HospitalRegistration = require('../../handler/DataBaseModel/HospitalSchema');
 const mongodbutil = require('../../config/database');
-var mongoUtil = require('mongoUtil');
+// var mongoUtil = require('mongoUtil');
 var UserRegistration = require('../../handler/DataBaseModel/UserSchema');
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
@@ -25,7 +25,7 @@ const login = async function (req, res) {
                             docs[0].password
                         );
                         if (!passwordIsValid) {
-                            return res.status(401).send({
+                            return res.status(203).send({
                                 accessToken: null,
                                 message: "Invalid Password! try again"
                             });
@@ -44,7 +44,7 @@ const login = async function (req, res) {
                         }
                         
                     } else {
-                        res.status(404).send({ message: "Invalid Email Id" });
+                        res.status(203).send({ message: "Invalid Email Id" });
                     }
                     // console.log("Hello");
 
@@ -58,7 +58,7 @@ const login = async function (req, res) {
                             docs[0].password
                         );
                         if (!passwordIsValid) {
-                            return res.status(401).send({
+                            return res.status(203).send({
                                 accessToken: null,
                                 message: "Invalid Password! try again"
                             });
@@ -77,12 +77,12 @@ const login = async function (req, res) {
                         }
                         
                     } else {
-                        res.status(404).send({ message: "Invalid Email or Password" });
+                        res.status(203).send({ message: "Invalid Email or Password" });
                     }
                     // console.log("Hello");
                 });
             } else {
-                res.status(404).send({ message: "Invalid Role "});
+                res.status(205).send({ message: "Invalid Role "});
             }
 
 
@@ -93,7 +93,7 @@ const login = async function (req, res) {
             // microServiceResponse.MicroserviceErrorResponseList.push(err);
 
             // resolve(microServiceResponse);
-            res.send(err);
+            res.status(500).send({ message:"This error is from our side"});
         }
     })
 }

@@ -15,8 +15,9 @@ router.post('/', async (req, res, next) => {
            res.statusCode = 500;
            res.json(businessLogicResponse.ErrorResponse);
        } else {
-            res.statusCode = 200;   
-            res.send("ok");
+            // res.statusCode = 200;   
+            // res.send("ok");
+            console.log("Data saved");
        }
 
     } catch (e) {

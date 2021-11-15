@@ -22,13 +22,13 @@ const UserReg = async function (req,res) {
                 .then(data => {
                     // microServiceResponse.data = data;
                     // resolve(microServiceResponse);
-                    res.json(data)
+                    res.send(200).json(data)
                 })
                 .catch(err => {
                     console.log(err);
                     // microServiceResponse.
                     // resolve(microServiceResponse);
-                    res.send(err);
+                    res.status(203).send({ message:"Problem occured in saving data ...."});
                 })
         } catch (err) {
             console.log('Error catched in User Hospital: ' + err.name + " : " + err.message);
@@ -37,7 +37,7 @@ const UserReg = async function (req,res) {
             // microServiceResponse.MicroserviceErrorResponseList.push(err);
 
             // resolve(microServiceResponse);
-            res.send(err);
+            res.status(500).send({ message:"This error is from our side"});
         }
     })
 }

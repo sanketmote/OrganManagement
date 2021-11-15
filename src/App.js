@@ -8,8 +8,9 @@ import {
 import React from 'react'
 import { Login, DRegister,HRegister } from "./Screens/index";
 import HomePage from './Screens/HomePage'
-import User from "./User"
+import User from "./user"
 import Huser from "./Huser"
+import DashBoard from './Screens/HospitalScreens/DashBoard'
 export default function App() {
   return (
     <div>
@@ -31,6 +32,9 @@ export default function App() {
             </Route>
             <Route path="/HRegister">
               <HRegister />
+            </Route>
+            <Route path="/HDashboard">
+              <DashBoard />
             </Route>
             <Route path="/">
               <HomePage />

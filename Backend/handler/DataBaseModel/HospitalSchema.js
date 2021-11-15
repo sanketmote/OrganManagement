@@ -7,7 +7,7 @@ const HospitalSchema = new mongoose.Schema({
         primaryKey: true,
         autoIncrement: true
     },
-    HosName: {
+    hosname: {
         type: String,
         allowNull: false,
         required: true
@@ -28,9 +28,34 @@ const HospitalSchema = new mongoose.Schema({
     },
     metamaskid:{
         type: String,
+        allowNull: true,
+        // required: true,
+        unique: true,
+    },
+    address:{
+        type: String,
+        allowNull: true,
+        required: true,
+    },
+    city:{
+        type: String,
         allowNull: false,
         required: true,
-        unique: true,
+    },
+    district:{
+        type: String,
+        allowNull: false,
+        required: true,
+    },
+    state:{
+        type: String,
+        allowNull: false,
+        required: true,
+    },
+    country:{
+        type: String,
+        allowNull: false,
+        required: true,
     },
     password: {
         type: String,
