@@ -5,6 +5,7 @@ import React from "react";
 import "../styles/Registration-login.scss";
 import axios from 'axios';
 import instance from "../Etherium/contrctInstance";
+import web from '../Etherium/web'
 export class DRegister extends React.Component {
   constructor(props) {
     super(props);
@@ -23,7 +24,7 @@ export class DRegister extends React.Component {
     this.changepassword = this.changepassword.bind(this);
     this.changecpassword = this.changecpassword.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
+    this.fetcheth = this.fetcheth.bind(this);
   }
 
   changefullName(event) {
@@ -62,9 +63,20 @@ export class DRegister extends React.Component {
     })
   }
 
-  onSubmit(event) {
-    event.preventDefault()
-    // await instance.methods.creatRequestDonar(this.state.metamaskid,this.state.metamaskhospitalid,this.state.organ,this.state.bloodgro)
+  async fetcheth(event){
+    // const len = await inst
+    // let productsList = await Promise.all(
+      // Array(parseInt(countProductsAddedInLaunch)).fill().map((element , index)=>{
+        const account1='0x15860AB0E54D6690feD81628ade276C3F0f6B547';
+        const donar= await instance.methods.Donors(account1).call();
+        console.log(donar['donorid']);
+      // })
+  // );
+  }
+  async onSubmit(event) {
+    event.preventDefault();
+    const accounts=await web.eth.getAccounts();
+    await instance.methods.creatRequestDonar(this.state.metamaskid,'0x988AF3B7649f5dB29B1b40564E14615cd87D606d','EYE','A+').send({from:accounts[0]});
     const registration = {
       fullName: this.state.fullName,
       mobileno: this.state.mobileno,
@@ -151,7 +163,9 @@ export class DRegister extends React.Component {
                 <span class="focus-input100" data-symbol="&#xf190;"></span>
                 <span class="glyphicon  form-control-feedback" id="message2"></span>
               </div>
-
+              <a onClick={this.fetcheth} class="txt2 login100-form-btn">
+                Fetch Metamask id              
+              </a>
               <div class="container-login100-form-btn hidden" id="disabled" style={{ "marginTop": "10%" }}>
                 <div class="wrap-login100-form-btn">
                   <div class="login100-form-bgbtn"></div>
