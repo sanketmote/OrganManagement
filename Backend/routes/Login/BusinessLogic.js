@@ -83,10 +83,45 @@ const login = async function (req, res) {
                     // console.log("Hello");
                 });
             } else {
-                res.status(205).send({ message: "Invalid Role " });
+                if (collection === 'Admin') {
+                    HospitalRegistration.find({ email: req.body.email }, function (err, docs) {
+                        if (err) throw err;
+                        if (docs.length > 0) {
+                            var passwordIsValid = bcrypt.compareSync(
+                                req.body.password,
+                                docs[0].password
+                            );
+                            if (!passwordIsValid) {
+                                return res.status(203).send({
+                                    accessToken: null,
+                                    message: "Invalid Password! try again"
+                                });
+                            } else {
+                                var token = jwt.sign({ id: docs[0].id }, config.secret, {
+                                    expiresIn: 864000000
+                                });
+                                res.status(200).send({
+                                    id: docs.id,
+                                    fullName: docs.fullName,
+                                    mobileno: docs.mobileno,
+                                    email: docs.email,
+                                    isAdmin:docs.isAdmin,
+                                    roles: 'Admin',
+                                    accessToken: token
+                                });
+                            }
+
+                        } else {
+                            console.log(docs)
+                            res.status(203).send({ message: "Invalid Email ", err: err });
+                        }
+                        // console.log("Hello");
+                    });
+                } else {
+                    res.status(205).send({ message: "Invalid Role " });
+                }
+
             }
-
-
         } catch (err) {
             console.log('Error catched in login: ' + err.name + " : " + err.message);
 

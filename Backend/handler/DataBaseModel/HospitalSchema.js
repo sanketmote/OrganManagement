@@ -29,8 +29,8 @@ const HospitalSchema = new mongoose.Schema({
     metamaskid:{
         type: String,
         allowNull: true,
-        // required: true,
-        // unique: true,
+        required: true,
+        unique: true,
     },
     address:{
         type: String,

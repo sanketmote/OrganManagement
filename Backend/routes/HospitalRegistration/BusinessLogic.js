@@ -18,6 +18,7 @@ const HospitalReg = async function (req, res) {
                 district: req.body.district,
                 country: req.body.country,
                 address: req.body.address,
+                metamaskid: req.body.metamaskid,
                 password: bcrypt.hashSync(req.body.password, 8)
             });
 
