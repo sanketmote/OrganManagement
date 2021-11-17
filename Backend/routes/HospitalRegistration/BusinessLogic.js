@@ -27,7 +27,7 @@ const HospitalReg = async function (req, res) {
                 .then(data => {
                     // microServiceResponse.data = data;
                     // resolve(microServiceResponse);
-                    res.send(200).json(data)
+                    res.status(200).json(data)
                 })
                 .catch(err => {
                     console.log(err);
