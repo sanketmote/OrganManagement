@@ -33,6 +33,7 @@ export class HRegister extends React.Component {
     this.changepassword = this.changepassword.bind(this);
     this.changecpassword = this.changecpassword.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.fetcheth = this.fetcheth.bind(this);
   }
 
   changehosname(event) {
@@ -92,6 +93,17 @@ export class HRegister extends React.Component {
     this.setState({
       password: event.target.value
     })
+  }
+
+  async fetcheth(event){
+    // const len = await inst
+    // let productsList = await Promise.all(
+      // Array(parseInt(countProductsAddedInLaunch)).fill().map((element , index)=>{
+        const account1='0x15860AB0E54D6690feD81628ade276C3F0f6B547';
+        const donar= await contract.methods.Donors(account1).call();
+        console.log(donar['donorid']);
+      // })
+  // );
   }
 
   async onSubmit(event) {
@@ -227,6 +239,10 @@ export class HRegister extends React.Component {
                 <span class="focus-input100" data-symbol="&#xf190;"></span>
                 <span class="glyphicon  form-control-feedback" id="message2"></span>
               </div>
+
+              <a onClick={this.fetcheth} class="txt2 login100-form-btn">
+                Fetch Metamask id              
+              </a>
 
               <div class="container-login100-form-btn hidden" id="disabled" style={{ "marginTop": "10%" }}>
                 <div class="wrap-login100-form-btn">
