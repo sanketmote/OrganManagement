@@ -94,22 +94,22 @@ export class HRegister extends React.Component {
       password: event.target.value
     })
   }
-
   async fetcheth(event){
     // const len = await inst
     // let productsList = await Promise.all(
       // Array(parseInt(countProductsAddedInLaunch)).fill().map((element , index)=>{
-        const account1='0x15860AB0E54D6690feD81628ade276C3F0f6B547';
-        const donar= await contract.methods.Donors(account1).call();
-        console.log(donar['donorid']);
+       
+    const accounts=await web.eth.getAccounts();
+        const len= await contract.methods.gethospitalcount().call();
+        console.log(len);
       // })
   // );
   }
-
   async onSubmit(event) {
     event.preventDefault()
     const accounts=await web.eth.getAccounts();
     await contract.methods.creatRequestHospital(this.state.hname).send({from:accounts[0],gasPrice:"210000"});
+    
     const registration = {
       hosname: this.state.hname,
       mobileno: this.state.mobileno,
@@ -239,11 +239,9 @@ export class HRegister extends React.Component {
                 <span class="focus-input100" data-symbol="&#xf190;"></span>
                 <span class="glyphicon  form-control-feedback" id="message2"></span>
               </div>
-
               <a onClick={this.fetcheth} class="txt2 login100-form-btn">
                 Fetch Metamask id              
               </a>
-
               <div class="container-login100-form-btn hidden" id="disabled" style={{ "marginTop": "10%" }}>
                 <div class="wrap-login100-form-btn">
                   <div class="login100-form-bgbtn"></div>

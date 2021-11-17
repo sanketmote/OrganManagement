@@ -213,6 +213,12 @@ contract OrganChain {
     function gettransplantlength()public view returns(uint256){
         return transplantarr.length;
     }
+     
+}
+
+
+
+
     // function gettransplantDetails(uint256 position)public view returns(
     //     address,
     //     address
@@ -238,5 +244,3 @@ contract OrganChain {
     //         return(Recipients[recipientarr[j]].EMRhash);
     //     }
     // }
-     
-}
