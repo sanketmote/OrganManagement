@@ -27,7 +27,6 @@ class AuthService {
                 } else {
                     return res;
                 }
-                return res;
             })
             .catch(err => {
                 console.log(err);

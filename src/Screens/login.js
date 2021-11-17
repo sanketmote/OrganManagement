@@ -1,7 +1,7 @@
 import React from "react";
 // import loginImg from "../../login.svg";
 import "../styles/Registration-login.scss";
-import axios from 'axios';
+// import axios from 'axios';
 import AuthService from "../services/auth.service";
 
 export class Login extends React.Component {

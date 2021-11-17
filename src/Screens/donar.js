@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+// import axios from "axios";
 import web3 from  "../Etherium/web"
 // import loginImg from "../../login.svg";
 import "../styles/Registration-login.scss";
