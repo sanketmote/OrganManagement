@@ -2,7 +2,7 @@ import React from "react";
 // import loginImg from "../../login.svg";
 import "../styles/Registration-login.scss";
 import axios from 'axios';
-
+import AuthService from "../services/auth.service";
 
 export class Login extends React.Component {
   constructor(props) {
@@ -42,7 +42,7 @@ export class Login extends React.Component {
     })
   }
 
-  onSubmit(event) {
+  async onSubmit(event) {
     event.preventDefault()
 
     const loginval = {
@@ -52,23 +52,30 @@ export class Login extends React.Component {
       password: this.state.password,
     }
 
-    console.log("hii",loginval)
-    axios.post('http://localhost:4000/login/',loginval)   /// After Hosting change to hosted backend name
-      .then(res => { 
-        console.log(res);
-        if(!res.data.message){
-          if(loginval.role === 'users'){
-            window.location = '/user'
-          } 
-          if(loginval.role === 'Hospitals'){
-            window.location = '/HDashboard' //#endregion
-          }
-        } else {
-          alert("Invalid User Email id and Password for "+ loginval.role + " Login");
-        }
+    const res = await AuthService.login(loginval);
+    if(!res.message){
+      alert('Logging .. ');
+    } else {
+      alert(res.message);
+    }
+    // console.log("hii",loginval)
+    // axios.post('http://localhost:4000/login/',loginval)   /// After Hosting change to hosted backend name
+    //   .then(res => { 
+    //     console.log(res);
+
+    //     if(!res.data.message){
+    //       if(loginval.role === 'users'){
+    //         window.location = '/user'
+    //       } 
+    //       if(loginval.role === 'Hospitals'){
+    //         window.location = '/HDashboard' //#endregion
+    //       }
+    //     } else {
+    //       alert("Invalid User Email id and Password for "+ loginval.role + " Login");
+    //     }
         
-      })
-      .catch(err => console.log(err));
+    //   })
+    //   .catch(err => console.log(err));
   }
   render() {
     return (
@@ -92,7 +99,7 @@ export class Login extends React.Component {
 
               <div className="wrap-input100 validate-input m-b-23" data-validate="Email is reauired">
                 <span className="label-input100">Email </span>
-                <input className="input100" type="email" name="email" placeholder="Type your Email" autocomplete="off"
+                <input className="input100" type="email" name="email" placeholder="Type your Email" autoComplete="off"
                   onChange={this.changeemail} value={this.state.email} required />
                 <span className="focus-input100" data-symbol="&#xf206;"></span>
               </div>
@@ -124,7 +131,7 @@ export class Login extends React.Component {
                   Don't have account?
                 </span>
 
-                <a onclick="" href="/signup" className="txt2">
+                <a href="/" className="txt2">
                   Sign Up
                 </a>
               </div>

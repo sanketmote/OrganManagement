@@ -3,6 +3,7 @@ import axios from "axios";
 import web3 from  "../Etherium/web"
 // import loginImg from "../../login.svg";
 import "../styles/Registration-login.scss";
+import formdata from '../services/state'
 // const Web3=require('web3');
 // todo : -> fetch list of hospitals according to city , district , state .
 export default class Donar extends React.Component {
@@ -148,7 +149,9 @@ export default class Donar extends React.Component {
   }
 
   render() {
-
+    const AllState = formdata.getState();
+    const {state} = this.state;
+    const AllDistrict = formdata.getDistrict(state) === undefined ? [] : formdata.getDistrict(state);
     return (
       <div className="limiter reglog">
         <div className="container-login100 background-image">
@@ -160,21 +163,21 @@ export default class Donar extends React.Component {
               <div className="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
                 <span className="label-input100">Full name</span>
                 <input className="input100" type="text" name="fullname" placeholder="Type the recipient name" 
-                 onChange={this.changefullName} value={this.state.fullName} autocomplete="off" required />
+                 onChange={this.changefullName} value={this.state.fullName} autoComplete="off" required />
                 <span className="focus-input100" data-symbol="&#xf206;"></span>
               </div>
 
               <div className="wrap-input100 validate-input m-b-23" data-validate="bloodgroup is reauired">
                 <span className="label-input100">Blood Group</span>
                 <input className="input100" type="text" name="bloodgroup" placeholder="Type your blood group" 
-                 onChange={this.changebloodgroup} value={this.state.bloodgroup} autocomplete="off" required />
+                 onChange={this.changebloodgroup} value={this.state.bloodgroup} autoComplete="off" required />
                 <span className="focus-input100" data-symbol="&#xf276;"></span>
               </div>
 
               <div className="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
                 <span className="label-input100">Metamask ID</span>
                 <input className="input100" type="text" name="metamaskid" placeholder="Type your metamask ID" 
-                 onChange={this.changemetamaskid} value={this.state.metamaskid} autocomplete="off" disabled required />
+                 onChange={this.changemetamaskid} value={this.state.metamaskid} autoComplete="off" disabled required />
                 {/* Validation left */}
                 <span className="focus-input100" data-symbol="&#xf10c;"></span>
               </div>
@@ -183,7 +186,7 @@ export default class Donar extends React.Component {
               <div className="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
                 <span className="label-input100">Organ name</span>
                 <input className="input100" type="text" name="orgname" placeholder="Type the organ name" 
-                 onChange={this.changeorgname} value={this.state.orgname} autocomplete="off" required />
+                 onChange={this.changeorgname} value={this.state.orgname} autoComplete="off" required />
                 <span className="focus-input100" data-symbol="&#xf276;"></span>
 
               </div>
@@ -191,35 +194,50 @@ export default class Donar extends React.Component {
               <div className="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
                 <span className="label-input100">Certificate Image</span><br></br><br></br>
                 <input className="input100" type="file" name="image" 
-                onChange={this.changeselectedFile} placeholder="Submit your certificate" autocomplete="off" required />
+                onChange={this.changeselectedFile} placeholder="Submit your certificate" autoComplete="off" required />
 
               </div>
 
-              <div class="wrap-input100 validate-input m-b-23" data-validate="city is reauired">
-                <span class="label-input100">City</span>
-                <input class="input100" type="text" name="city" placeholder="Enter city name" autocomplete="off"
-                  onChange={this.changecity} value={this.state.city} required />
+              <div class="wrap-input100 validate-input m-b-23" data-validate="state is reauired">
+                <span class="label-input100">State</span>
+                <select className="input100" name="state" id="role" onChange={this.changestate} value={this.state.state} required >
+                  {/* for(var i=0;i<formData.getState.length;i++)
+                   */}
+                   {AllState.map(state3 => (
+                    <option value={state3}>{state3}</option>
+                   ))}
+                </select>
+                {/* <input class="input100" type="text" name="state" placeholder="Enter state" autoComplete="off"
+                  onChange={this.changestate} value={this.state.state} required /> */}
                 <span class="focus-input100" data-symbol="&#xf10c;"></span>
               </div>
 
               <div class="wrap-input100 validate-input m-b-23" data-validate="district is reauired">
                 <span class="label-input100">District</span>
-                <input class="input100" type="text" name="district" placeholder="Enter district" autocomplete="off"
-                  onChange={this.changedistrict} value={this.state.district} required />
+                <select className="input100" name="district" id="role" onChange={this.changedistrict} value={this.state.district} required >
+                  {/* for(var i=0;i<formData.getState.length;i++)
+                   */}
+                   {AllDistrict.map(state3 => (
+                    <option value={state3}>{state3}</option>
+                   ))}
+                </select>
+
+                {/* <input class="input100" type="text" name="district" placeholder="Enter district" autoComplete="off"
+                  onChange={this.changedistrict} value={this.state.district} required /> */}
                 <span class="focus-input100" data-symbol="&#xf10c;"></span>
               </div>
 
-              <div class="wrap-input100 validate-input m-b-23" data-validate="state is reauired">
-                <span class="label-input100">State</span>
-                <input class="input100" type="text" name="state" placeholder="Enter state" autocomplete="off"
-                  onChange={this.changestate} value={this.state.state} required />
+              <div class="wrap-input100 validate-input m-b-23" data-validate="city is reauired">
+                <span class="label-input100">City</span>
+                <input class="input100" type="text" name="city" placeholder="Enter city name" autoComplete="off"
+                  onChange={this.changecity} value={this.state.city} required />
                 <span class="focus-input100" data-symbol="&#xf10c;"></span>
               </div>
 
               <div className="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
                 <span className="label-input100">Select Hospital</span>
                 <input className="input100" type="text" name="username" placeholder="Type your username" 
-                 onChange={this.changeselecthospital} value={this.state.selecthospital} autocomplete="off" required />
+                 onChange={this.changeselecthospital} value={this.state.selecthospital} autoComplete="off" required />
                 <span className="focus-input100" data-symbol="&#xf206;"></span>
               </div>
 

@@ -3,21 +3,16 @@ import axios from "axios";
 const API_URL = "http://localhost:4000/";  // change to hosted API link
 
 class AuthService {
-    login(role, username, password) {
-
-        const loginval = {
-            role: this.state.role,
-            email: this.state.email,
-            // metamaskid: this.state.metamaskid,
-            password: this.state.password,
-        }
-
-        return axios.post(API_URL + "login", loginval)
+    async login(loginval) {
+        return await axios.post(API_URL + "login", loginval)
             .then(res => {
-
+                alert(res.data);
+                console.log(res.data);
                 if (!res.data.message) {
                     if (res.data.accessToken) {
+                        alert("Access : " + res.data.accessToken);
                         localStorage.setItem("user", JSON.stringify(res.data));
+                        console.log(JSON.parse(localStorage.getItem('user')));
                     }
                     if (loginval.role === 'users') {
                         window.location = '/user'
@@ -27,7 +22,7 @@ class AuthService {
                     }
                     return res.data;
                 } else {
-                    return res.message;
+                    return res;
                 }
                 return res;
             })
@@ -50,7 +45,8 @@ class AuthService {
     }
 
     getCurrentUser() {
-        return JSON.parse(localStorage.getItem('user'));;
+        console.log(JSON.parse(localStorage.getItem('user')))
+        return JSON.parse(localStorage.getItem('user'));
     }
 }
 

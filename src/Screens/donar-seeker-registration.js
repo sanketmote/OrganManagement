@@ -104,7 +104,7 @@ export class DRegister extends React.Component {
               <div class="wrap-input100 validate-input m-b-23" data-validate="Full Name is reauired">
                 <span class="label-input100" >Full Name</span>
                 <input class="input100" type="text" name="fname"
-                  placeholder="Type your Full Name" autocomplete="off"
+                  placeholder="Type your Full Name" autoComplete="off"
                   onChange={this.changefullName} value={this.state.fullName} required />
                 <span class="focus-input100" data-symbol="&#xf206;"></span>
               </div>
@@ -113,7 +113,7 @@ export class DRegister extends React.Component {
               <div class="wrap-input100 validate-input m-b-23" data-validate="Email is reauired">
                 <span class="label-input100">Email</span>
                 <input class="input100" type="text" name="email"
-                  placeholder="Type your Email" autocomplete="off"
+                  placeholder="Type your Email" autoComplete="off"
                   onChange={this.changeemail} value={this.state.email} required />
                 <span class="focus-input100" data-symbol="&#xf206;"></span>
               </div>
@@ -121,7 +121,7 @@ export class DRegister extends React.Component {
               <div class="wrap-input100 validate-input m-b-23" data-validate="mobile no is reauired">
                 <span class="label-input100">Mobile No</span>
                 <input class="input100" type="tel" name="mobile" placeholder="Type your mobile no"
-                  autocomplete="off" required
+                  autoComplete="off" required
                   onChange={this.changeno} value={this.state.mobileno} />
                 <span class="focus-input100" data-symbol="&#xf206;"></span>
               </div>
@@ -129,14 +129,14 @@ export class DRegister extends React.Component {
               <div class="wrap-input100 validate-input m-b-23" data-validate="metamask id is reauired">
                 <span class="label-input100">MetaMask ID</span>
                 <input class="input100" type="text" name="metamaskid" placeholder="Type your Meta Mask ID"
-                  autocomplete="off" required onChange={this.changemetamaskid} value={this.state.metamaskid} />
+                  autoComplete="off" required onChange={this.changemetamaskid} value={this.state.metamaskid} />
                 <span class="focus-input100" data-symbol="&#xf206;"></span>
               </div>
 
               <div class="wrap-input100 validate-input" data-validate="Password is required">
                 <span class="label-input100">Enter Password</span>
                 <input class="input100" id="password" type="password" name="pass"
-                  placeholder="Type your password" autocomplete="off"
+                  placeholder="Type your password" autoComplete="off"
                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                   title="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
                   onChange={this.changepassword} value={this.state.password} required />
@@ -147,7 +147,7 @@ export class DRegister extends React.Component {
               <div class="wrap-input100 validate-input form-group has-feedback cp" id="message1" data-validate="Password is required">
                 <span class="label-input100">Confirm Password</span>
                 <input class="input100" id="confirm_password" type="password" name="pass1" placeholder="Type your Confirm password"
-                  autocomplete="off" required onChange={this.changecpassword} value={this.state.cpassword} />
+                  autoComplete="off" required onChange={this.changecpassword} value={this.state.cpassword} />
                 <span class="focus-input100" data-symbol="&#xf190;"></span>
                 <span class="glyphicon  form-control-feedback" id="message2"></span>
               </div>

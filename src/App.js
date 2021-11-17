@@ -2,11 +2,12 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
   // Link,
 } from "react-router-dom";
 
 import React from 'react'
-import { Login, DRegister,HRegister } from "./Screens/index";
+import { Login, DRegister, HRegister } from "./Screens/index";
 import HomePage from './Screens/HomePage'
 import User from "./user"
 import Huser from "./Huser"
@@ -23,18 +24,19 @@ export default class App extends React.Component {
       hospitals: false,
       users: false,
       currentUser: undefined,
-      id: 1
+      isloggedIn: false,
     };
   }
 
-  componentDidMount() {
-    const user = AuthService.getCurrentUser();
+  getvals = async() => {
+    const user = await AuthService.getCurrentUser();
 
     if (user) {
       this.setState({
         currentUser: user,
-        users: user.role.includes("users"),
-        hospitals: user.role.includes("Hospitals"),
+        isloggedIn: user !== undefined ? true : false,
+        users: user.roles === "users" ? true : false,
+        hospitals: user.roles === "Hospitals" ? true : false,
       });
     }
   }
@@ -43,46 +45,56 @@ export default class App extends React.Component {
     AuthService.logout();
   }
   render() {
-
-    const { id , currentUser, users, hospitals } = this.state;
-
+    this.getvals();
+    const { isloggedIn, users, hospitals } = this.state;
+    // alert(isloggedIn, users, hospitals);
     return (
       <div>
         <Router>
           <div>
-  
+
             <Switch>
               <Route path="/login">
-                <Login />
+                {isloggedIn && users ? <Redirect to='/user' /> : (hospitals ? <Redirect to='/huser' /> : <Login />)}
               </Route>
-              
-              <Route path="/user">
-              { id && <User />}
-                {/* <User /> */}
+
+              <Route exact path="/user">
+                {isloggedIn && users ? <User /> : <Redirect to="/login" />}
               </Route>
+
               <Route path="/huser">
-                <Huser />
+                {isloggedIn && hospitals ? <Huser /> : <Redirect to="/login" />}
               </Route>
+
               <Route path="/DRegister">
-                <DRegister />
+                {isloggedIn && users ? <Redirect to='/user' /> : (hospitals ? <Redirect to='/huser' /> : <DRegister />)}
               </Route>
+
               <Route path="/HRegister">
-                <HRegister />
+                {isloggedIn && users ? <Redirect to='/user' /> : (hospitals ? <Redirect to='/huser' /> : <HRegister />)}
               </Route>
+
               <Route path="/HDashboard">
-                <DashBoard />
+                {/* <DashBoard /> */}
+                {isloggedIn && hospitals ? <DashBoard /> : <Redirect to="/login" />}
               </Route>
+
               <Route path="/donar">
-                <Donar />
+                {/* {isloggedIn && users ? <Donar /> : <Redirect to="/login" />}
+                 */}
+                 <Donar />
               </Route>
+
               <Route path="/">
-                <HomePage />
+                {isloggedIn && users ? <Redirect to='/UDashboard' /> : (hospitals ? <Redirect to='/HDashboard' /> : <HomePage />)}
               </Route>
+
+
             </Switch>
           </div>
         </Router>
       </div>
     )
   }
-  
+
 }

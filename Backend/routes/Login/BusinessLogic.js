@@ -5,7 +5,7 @@ const mongodbutil = require('../../config/database');
 var UserRegistration = require('../../handler/DataBaseModel/UserSchema');
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
-const config  = require('../../config/auth.config')
+const config = require('../../config/auth.config')
 // var db = mongodbutil.getDb();
 
 const login = async function (req, res) {
@@ -18,7 +18,7 @@ const login = async function (req, res) {
             if (collection === 'users') {
                 UserRegistration.find({ email: req.body.email }, function (err, docs) {
                     if (err) throw err;
-                    if (docs.length > 0) {  
+                    if (docs.length > 0) {
                         console.log(docs);
                         var passwordIsValid = bcrypt.compareSync(
                             req.body.password,
@@ -35,14 +35,14 @@ const login = async function (req, res) {
                             });
                             res.status(200).send({
                                 id: docs[0].id,
-                                fullName:docs[0].fullName,
+                                fullName: docs[0].fullName,
                                 mobileno: docs[0].mobileno,
                                 email: docs[0].email,
                                 roles: 'users',
                                 accessToken: token
-                              });
+                            });
                         }
-                        
+
                     } else {
                         res.status(203).send({ message: "Invalid Email Id" });
                     }
@@ -50,7 +50,7 @@ const login = async function (req, res) {
 
                 });
             } else if (collection === 'Hospitals') {
-                HospitalRegistration.find({ email: req.body.email, password: req.body.password }, function (err, docs) {
+                HospitalRegistration.find({ email: req.body.email }, function (err, docs) {
                     if (err) throw err;
                     if (docs.length > 0) {
                         var passwordIsValid = bcrypt.compareSync(
@@ -63,26 +63,27 @@ const login = async function (req, res) {
                                 message: "Invalid Password! try again"
                             });
                         } else {
-                            var token = jwt.sign({ id: user.id }, config.secret, {
+                            var token = jwt.sign({ id: docs[0].id }, config.secret, {
                                 expiresIn: 864000000
                             });
                             res.status(200).send({
                                 id: docs.id,
-                                fullName:docs.fullName,
+                                fullName: docs.fullName,
                                 mobileno: docs.mobileno,
                                 email: docs.email,
                                 roles: 'Hospitals',
                                 accessToken: token
-                              });
+                            });
                         }
-                        
+
                     } else {
-                        res.status(203).send({ message: "Invalid Email or Password" });
+                        console.log(docs)
+                        res.status(203).send({ message: "Invalid Email or Password", err: err });
                     }
                     // console.log("Hello");
                 });
             } else {
-                res.status(205).send({ message: "Invalid Role "});
+                res.status(205).send({ message: "Invalid Role " });
             }
 
 
@@ -93,7 +94,7 @@ const login = async function (req, res) {
             // microServiceResponse.MicroserviceErrorResponseList.push(err);
 
             // resolve(microServiceResponse);
-            res.status(500).send({ message:"This error is from our side"});
+            res.status(500).send({ message: "This error is from our side" });
         }
     })
 }
