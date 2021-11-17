@@ -13,8 +13,8 @@ export class HRegister extends React.Component {
       hname: '',
       mobileno: '',
       email: '',
-      state1: '',
-      district: '',
+      state1: 'Andhra Pradesh',
+      district: 'Anantapur',
       hosadd: '',
       city: '',
       state: '',
@@ -79,7 +79,7 @@ export class HRegister extends React.Component {
 
   changestate(event) {
     this.setState({
-      state: event.target.value
+      state1: event.target.value
     })
   }
 
@@ -110,14 +110,14 @@ export class HRegister extends React.Component {
     event.preventDefault()
     try {
       const accounts = await web.eth.getAccounts();
-      await contract.methods.creatRequestHospital(this.state.hname).send({ from: accounts[0], gasPrice: "210000" });
 
+      alert(accounts[0])
       const registration = {
         hosname: this.state.hname,
         mobileno: this.state.mobileno,
         email: this.state.email,
         city: this.state.city,
-        state: this.state.state,
+        state: this.state.state1,
         district: this.state.district,
         country: this.state.country,
         address: this.state.hosadd,
@@ -137,6 +137,7 @@ export class HRegister extends React.Component {
 
         })
         .catch(err => console.log(err));
+      await contract.methods.creatRequestHospital(this.state.hname).send({ from: accounts[0], gasPrice: "210000" });
     } catch (err) {
       alert("You Don't Have Metamask extension we can't fetch so please enable it");
     }
