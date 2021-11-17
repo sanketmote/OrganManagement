@@ -23,6 +23,7 @@ export default class App extends React.Component {
     this.state = {
       hospitals: false,
       users: false,
+      isAdmin:false,
       currentUser: undefined,
       isloggedIn: false,
     };
@@ -35,6 +36,7 @@ export default class App extends React.Component {
       this.setState({
         currentUser: user,
         isloggedIn: user !== undefined ? true : false,
+        isAdmin: user.isAdmin === true ? true : false,
         users: user.roles === "users" ? true : false,
         hospitals: user.roles === "Hospitals" ? true : false,
       });
@@ -46,7 +48,7 @@ export default class App extends React.Component {
   }
   render() {
     this.getvals();
-    const { isloggedIn, users, hospitals } = this.state;
+    const { isloggedIn, users, hospitals , isAdmin} = this.state;
     // alert(isloggedIn, users, hospitals);
     return (
       <div>
@@ -83,6 +85,10 @@ export default class App extends React.Component {
                 {/* {isloggedIn && users ? <Donar /> : <Redirect to="/login" />}
                  */}
                  <Donar />
+              </Route>
+
+              <Route path="/admin">
+                {isloggedIn && isAdmin ? <Redirect to='/ADashboard' /> : <Redirect to='/' /> }
               </Route>
 
               <Route path="/">

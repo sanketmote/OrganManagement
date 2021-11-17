@@ -20,6 +20,9 @@ class AuthService {
                     if (loginval.role === 'Hospitals') {
                         window.location = '/HDashboard' //#endregion
                     }
+                    if (loginval.isAdmin=== 'Admin') {
+                        window.location = '/ADashboard' //#endregion
+                    }
                     return res.data;
                 } else {
                     return res;

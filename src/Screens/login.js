@@ -92,6 +92,7 @@ export class Login extends React.Component {
                 <select className="input100" name="role" id="role" onChange={this.changerole} value={this.state.role} >
                   <option value="users">User</option>
                   <option value="Hospitals">Hospital</option>
+                  <option value="Admin">Admin</option>
                 </select>
 
                 <span className="focus-input100" data-symbol="&#xf206;"></span>

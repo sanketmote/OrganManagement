@@ -4,7 +4,8 @@ import React from "react";
 // import loginImg from "../../login.svg";
 import axios from 'axios';
 import formdata from '../services/state'
-
+import web from "../Etherium/web";
+import contract from "../Etherium/contrctInstance";
 export class HRegister extends React.Component {
   constructor(props) {
     super(props);
@@ -93,9 +94,10 @@ export class HRegister extends React.Component {
     })
   }
 
-  onSubmit(event) {
+  async onSubmit(event) {
     event.preventDefault()
-    // await instance.methods.creatRequestDonar(this.state.metamaskid,this.state.metamaskhospitalid,this.state.organ,this.state.bloodgro)
+    const accounts=await web.eth.getAccounts();
+    await contract.methods.creatRequestHospital(this.state.hname).send({from:accounts[0],gasPrice:"210000"});
     const registration = {
       hosname: this.state.hname,
       mobileno: this.state.mobileno,
@@ -106,6 +108,7 @@ export class HRegister extends React.Component {
       country: this.state.country,
       address: this.state.hosadd,
       password: this.state.password,
+      metamaskid: accounts[0]
     }
 
     axios.post('http://localhost:4000/hr/', registration)   /// After Hosting change to hosted backend name
