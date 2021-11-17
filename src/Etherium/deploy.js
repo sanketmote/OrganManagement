@@ -1,6 +1,6 @@
 const HDWalletProvider =require('truffle-hdwallet-provider');
 const Web3=require('web3');
-const prevoting =require('./build/OrganChain.json');
+const OrganChain =require('./build/OrganChain.json');
 
 const provider=new HDWalletProvider(
 	'prize truly dress between library elephant three frequent eager shove join crime',
@@ -13,11 +13,11 @@ const deploy=async()=>{
 	const accounts=await web3.eth.getAccounts();
 	console.log(accounts[0]);
 
-	const result=await new web3.eth.Contract(JSON.parse(prevoting.interface))
-	.deploy({data: prevoting.bytecode})
+	const result=await new web3.eth.Contract(JSON.parse(OrganChain.interface))
+	.deploy({data: OrganChain.bytecode})
 	.send({gas:'5000000',gasPrice:'60000000000',from:accounts[0]});
 
-	console.log(prevoting.interface);
+	console.log(OrganChain.interface);
 	console.log('addres == ',result.options.address);
 };
 

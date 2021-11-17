@@ -31,17 +31,18 @@ contract OrganChain {
         bool added;
     }
     
-    struct transplant{
+    struct transplant{                  // to retrieve the data of transplants
         address recipient;
-        address donor;
+        address donor; 
+        address HospitalId;
         bool exist;
     }
     
     //global variables
-    address[] recipientarr;                 //to get all recipients list
-    address[] donorarr;                     //to get all donar list
-    address[] transplantarr;                //to get all transplants list
-    address[] hospitalarr;
+    address[] public recipientarr;                 //to get all recipients list
+    address[] public donorarr;                     //to get all donar list
+    address[] public transplantarr;                //to get all transplants list
+    address[] public hospitalarr;
     address public admin;
     
     
@@ -53,8 +54,8 @@ contract OrganChain {
     //Mappings
     mapping(address => recipient) public Recipients;
     mapping(address => donor) public Donors;
-    mapping(address => transplant) Transplants;
-    mapping(address => Hospital) hospital;
+    mapping(address => transplant) public Transplants;
+    mapping(address => Hospital) public hospital;
     
     //modifier
     
@@ -88,62 +89,63 @@ contract OrganChain {
     
     //donor functions
     
-    function creatRequestDonar(address donorid,
+    function creatRequestDonar(
         address hospitalid,
         string memory organ,
         string  memory bloodgroup) 
         public 
     {
             
-            Donors[donorid]=donor(donorid,hospitalid,organ,
+            Donors[msg.sender]=donor(msg.sender,hospitalid,organ,
                                             bloodgroup,false,true,false);
+            donorarr.push(msg.sender);
             
     }
     
     function addDonar(address donori) public payable restricted{
             
             Donors[donori].added=true;
-            donorarr.push(donori);
+            
             
         }
         
-    function getdonor(address donoradd) public  view checkdonoradded(donoradd)
-    returns (address,
-     string memory,
-     string memory,
-    bool){
-        return(
-            Donors[donoradd].donorid,
-            Donors[donoradd].organ,
-            Donors[donoradd].bloodgroup,
-            Donors[donoradd].matchfound);
-    }
+    // function getdonor(address donoradd) public  view checkdonoradded(donoradd)
+    // returns (address,
+    //  string memory,
+    //  string memory,
+    // bool){
+    //     return(
+    //         Donors[donoradd].donorid,
+    //         Donors[donoradd].organ,
+    //         Donors[donoradd].bloodgroup,
+    //         Donors[donoradd].matchfound);
+    // }
     
-    function getdonorwithtransplant(address donoradd) public checkdonoradded(donoradd) view
-    returns (address,
-    string memory,
-    string memory,
-    address) {
-        for(uint i=0;i<transplantarr.length;i++)
-        {
-            if(donoradd==Transplants[transplantarr[i]].donor)
-            return(Donors[donoradd].donorid,
-            Donors[donoradd].organ,
-            Donors[donoradd].bloodgroup,
+    // function getdonorwithtransplant(address donoradd) public checkdonoradded(donoradd) view
+    // returns (address,
+    // string memory,
+    // string memory,
+    // address) {
+    //     for(uint i=0;i<transplantarr.length;i++)
+    //     {
+    //         if(donoradd==Transplants[transplantarr[i]].donor)
+    //         return(Donors[donoradd].donorid,
+    //         Donors[donoradd].organ,
+    //         Donors[donoradd].bloodgroup,
             
-            Transplants[transplantarr[i]].recipient);
-        }
-    }
+    //         Transplants[transplantarr[i]].recipient);
+    //     }
+    // }
     function getDonorcount() public view returns(uint256)
     {
         return(donorarr.length);
     }
     // hospital functions
     
-    function creatRequestHospital(address hospitalId,string name) 
+    function creatRequestHospital(string name) 
     public {
-        hospital[hospitalId]=Hospital(hospitalId,name,false);
-        hospitalarr.push(hospitalId);
+        hospital[msg.sender]=Hospital(msg.sender,name,false);
+        hospitalarr.push(msg.sender);
     }
     
     function addHospital(address hospitalId) 
@@ -151,6 +153,7 @@ contract OrganChain {
     {
         hospital[hospitalId].added=true;
     }
+    
     function gethospitalcount() public view returns(uint256)
     {
         return(hospitalarr.length);
@@ -158,32 +161,32 @@ contract OrganChain {
     
     //recipient functions
     
-    function creatRequestRecipient(address patientid,
+    function creatRequestRecipient(
         address hospitalid,
         string memory organ,
         string memory bloodgroup) public {
-            Recipients[patientid] = recipient(patientid,hospitalid,
+            Recipients[msg.sender] = recipient(msg.sender,hospitalid,
                                                 organ,bloodgroup,false,true,false);
-            
+            recipientarr.push(msg.sender);
         }
     function addrecipient(
         address patientid) public payable restricted{
             Recipients[patientid].added=true;
-            recipientarr.push(patientid);
+            
             
     }
         
-    function getrecipient(address reciadd) public checkrecipientadded(reciadd) view
-    returns(address,
-    address,
-    string memory,
-    string memory){
-        return(
-            Recipients[reciadd].patientid,
-            Recipients[reciadd].hospitalid,
-            Recipients[reciadd].organ,
-            Recipients[reciadd].bloodgroup);
-    }
+    // function getrecipient(address reciadd) public checkrecipientadded(reciadd) view
+    // returns(address,
+    // address,
+    // string memory,
+    // string memory){
+    //     return(
+    //         Recipients[reciadd].patientid,
+    //         Recipients[reciadd].hospitalid,
+    //         Recipients[reciadd].organ,
+    //         Recipients[reciadd].bloodgroup);
+    // }
     
     function getrecipientcount() public view returns(uint256)
     {
@@ -199,7 +202,7 @@ contract OrganChain {
         {
             if( (keccak256(abi.encodePacked((Recipients[recipientad].organ)))==keccak256(abi.encodePacked((Donors[donorarr[i]].organ)))) 
             && (keccak256(abi.encodePacked((Recipients[recipientad].bloodgroup)))==keccak256(abi.encodePacked((Donors[donorarr[i]].bloodgroup))) ))
-            {   Transplants[recipientad]=transplant(recipientad,donorarr[i],true);
+            {   Transplants[recipientad]=transplant(recipientad,donorarr[i],msg.sender,true);
                 transplantarr.push(recipientad);
                 Recipients[recipientad].matchfound=true;
                 Donors[donorarr[i]].matchfound=true;
@@ -210,15 +213,15 @@ contract OrganChain {
     function gettransplantlength()public view returns(uint256){
         return transplantarr.length;
     }
-    function gettransplantDetails(uint256 position)public view returns(
-        address,
-        address
-        ){
-            return(
-                Transplants[transplantarr[position]].recipient,
-                Transplants[transplantarr[position]].donor
-                );
-    }
+    // function gettransplantDetails(uint256 position)public view returns(
+    //     address,
+    //     address
+    //     ){
+    //         return(
+    //             Transplants[transplantarr[position]].recipient,
+    //             Transplants[transplantarr[position]].donor
+    //             );
+    // }
     
     //patient record
     
