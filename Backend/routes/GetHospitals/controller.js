@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
             res.statusCode = 500;
             res.json(businessLogicResponse.ErrorResponse);
         } else {
-                console.log("Data feteched");
+            console.log("Data feteched");
         }
 
     } catch (e) {

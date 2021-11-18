@@ -7,23 +7,33 @@ const getHospital = async function (req, res) {
         // var MicroServiceResponse = new MicroServiceResponse();
         try {
             findhosfilter = {}
+            hospitaldata = [];
+            console.log(req.query)
             if(req.query.state && req.query.state.length > 0){
                 findhosfilter.state = req.query.state
             }
             if(req.query.district  && req.query.district.length > 0){
-                findhosfilter.state = req.query.district
+                findhosfilter.district = req.query.district
             }
 
             if(req.query.city && req.query.city.length > 0){
-                findhosfilter.state = req.query.city
+                findhosfilter.city = req.query.city
             }
-
-            gethospitals.find(findhosfilter,{hid:1,hosname:1}, function(err,data){
+            console.log(findhosfilter)
+            gethospitals.find(findhosfilter,{_id:0,hosname:1}, function(err,data){
                 if(err) {
                     res.status(203).send({message:"Problem occured in database"});
                     throw err;
                 } else {
-                    res.send(data)
+                    console.log(data);
+                    if(data.length > 0){
+                        for(var i=0;i<data.length;i++){
+                            hospitaldata[i] = data[i].hosname;
+                        }
+                    } else {
+                        hospitaldata = []
+                    }
+                    res.send(Object.values(hospitaldata));
                 }
             })
 

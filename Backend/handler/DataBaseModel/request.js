@@ -1,14 +1,8 @@
 const mongoose = require('mongoose');
 
 const requestschema = new mongoose.Schema({
-    rid: {
-        type: Number,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-    },
     did: {
-        type: Number,
+        type: String,
         allowNull: false,
         foreignKey: true,
     },

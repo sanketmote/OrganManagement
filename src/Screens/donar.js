@@ -4,6 +4,7 @@ import web3 from  "../Etherium/web"
 // import loginImg from "../../login.svg";
 import "../styles/Registration-login.scss";
 import formdata from '../services/state'
+import getData from '../services/getDataFromBackend'
 // const Web3=require('web3');
 // todo : -> fetch list of hospitals according to city , district , state .
 export default class Donar extends React.Component {
@@ -17,8 +18,10 @@ export default class Donar extends React.Component {
       orgname: '',
       selectedFile: null,
       city: '',
-      district: '',
-      state: '',
+      state1: 'Andhra Pradesh',
+      district: 'Anantapur',
+      hid:'',
+      hospitalvalue:[]
     }
     this.changefullName = this.changefullName.bind(this);
     this.changeselecthospital = this.changeselecthospital.bind(this);
@@ -32,7 +35,19 @@ export default class Donar extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
 
   }
-
+  componentWillMount(){
+    console.log("heloo")
+    var ans = getData.getHospitals("Maharashtra","Sangli","");
+    ans.then(result => {
+      this.setState({
+        hospitalvalue:result
+      })
+    }, function(err){
+      this.setState({
+        hospitalvalue:err
+      })
+    })
+  }
   changefullName(event) {
     this.setState({
       fullName: event.target.value
@@ -71,7 +86,7 @@ export default class Donar extends React.Component {
 
   changestate(event) {
     this.setState({
-      state: event.target.value
+      state1: event.target.value
     })
   }
 
@@ -123,7 +138,8 @@ export default class Donar extends React.Component {
       selectedFile: formData,
       city: this.state.city,
       district: this.state.district,
-      state: this.state.state,
+      state: this.state.state1,
+      hid:this.state.hid,
     }
 
     var link = ''
@@ -150,8 +166,13 @@ export default class Donar extends React.Component {
 
   render() {
     const AllState = formdata.getState();
-    const {state} = this.state;
-    const AllDistrict = formdata.getDistrict(state) === undefined ? [] : formdata.getDistrict(state);
+    const {state1,district,city,hospitalvalue} = this.state;
+    const AllDistrict = formdata.getDistrict(state1) === undefined ? [] : formdata.getDistrict(state1);
+    // const tmp = getData.getHospitals(state1,district,city);
+    // const k = city != '' ? this.componentWillMount():null;
+    // const hosdata = (tmp.length > 0)?tmp:[];
+    console.log(hospitalvalue)
+    const hosdata = [];
     return (
       <div className="limiter reglog">
         <div className="container-login100 background-image">
@@ -200,7 +221,7 @@ export default class Donar extends React.Component {
 
               <div class="wrap-input100 validate-input m-b-23" data-validate="state is reauired">
                 <span class="label-input100">State</span>
-                <select className="input100" name="state" id="role" onChange={this.changestate} value={this.state.state} required >
+                <select className="input100" name="state" id="role" onChange={this.changestate} value={this.state.state1} required >
                   {/* for(var i=0;i<formData.getState.length;i++)
                    */}
                    {AllState.map(state3 => (
@@ -234,10 +255,17 @@ export default class Donar extends React.Component {
                 <span class="focus-input100" data-symbol="&#xf10c;"></span>
               </div>
 
-              <div className="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+              <div className="wrap-input100 validate-input m-b-23" data-validate="Hospital is reauired">
                 <span className="label-input100">Select Hospital</span>
-                <input className="input100" type="text" name="username" placeholder="Type your username" 
-                 onChange={this.changeselecthospital} value={this.state.selecthospital} autoComplete="off" required />
+                <select className="input100" name="hospitals" id="role" onChange={this.changeselecthospital} value={this.state.selecthospital} required >
+                  {/* for(var i=0;i<formData.getState.length;i++)
+                   */}
+                   {hosdata.map(state3 => (
+                    <option value={state3}>{state3}</option>
+                   ))}
+                </select>
+                {/* <input className="input100" type="text" name="username" placeholder="Type your username" 
+                 onChange={this.changeselecthospital} value={this.state.selecthospital} autoComplete="off" required /> */}
                 <span className="focus-input100" data-symbol="&#xf206;"></span>
               </div>
 

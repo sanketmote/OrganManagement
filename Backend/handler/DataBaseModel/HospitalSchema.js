@@ -1,12 +1,6 @@
 const mongoose = require('mongoose');
 
 const HospitalSchema = new mongoose.Schema({
-    hid:{
-        type: Number,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-    },
     hosname: {
         type: String,
         allowNull: false,

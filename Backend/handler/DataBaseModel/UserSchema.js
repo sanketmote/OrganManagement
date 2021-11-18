@@ -1,12 +1,7 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
-    uid: {
-        type: Number,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-    },
+
     fullName: {
         type: String,
         allowNull: false,

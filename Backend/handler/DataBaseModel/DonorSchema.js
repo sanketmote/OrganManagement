@@ -1,12 +1,6 @@
 const mongoose = require('mongoose');
 
 const DonorSchema = new mongoose.Schema({
-    did: {
-        type: Number,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-    },
     uid: {
         type: Number,
         allowNull: false,

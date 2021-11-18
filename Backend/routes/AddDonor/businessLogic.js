@@ -26,7 +26,7 @@ const addonor = async function (req, res) {
                     // microServiceResponse.data = data;
                     // resolve(microServiceResponse);
                     const addreq = new addrequest({
-                        did: data.did,
+                        did: data._id,
                         uid: req.body.uid,
                         hid:req.body.hid,
                     })
@@ -34,7 +34,7 @@ const addonor = async function (req, res) {
                     .then(response => {
                         res.status(200).json(data)
                     }).catch(err =>{
-                        res.state(203).send({ message:"Your Data has been Added but request failed to sent contact to admin"})
+                        res.status(203).send({ message:"Your Data has been Added but request failed to sent contact to admin"})
                     })
                 })
                 .catch(err => {
