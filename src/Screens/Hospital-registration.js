@@ -140,7 +140,6 @@ export class HRegister extends React.Component {
     } catch (err) {
       alert("You Don't Have Metamask extension we can't fetch so please enable it");
     }
-
   }
 
   render() {
