@@ -16,9 +16,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 mongodbutil.connectToServer(function (err, client) {
-  if (err) console.log(err);
+  if (err) { 
+    console.log(err); 
+    console.log("Network Error: " + err.message); 
+  }  else console.log("Database connected!");
   // start the rest of your app here
-  console.log("Database connected!");
+
 });
 // mongoose.connect(process.env.DATABASE_ACCESS, {
 //     useNewUrlParser: true,
@@ -31,9 +34,12 @@ mongodbutil.connectToServer(function (err, client) {
 const HospitalRegistration = require('./routes/HospitalRegistration/controller');
 const UserRegistration = require('./routes/UserRegistration/controller');
 const login = require('./routes/Login/controller');
+const adddonor = require('./routes/AddDonor/controller');
+const getHospital = require('./routes/GetHospitals/controller');
 
 app.use('/hr', HospitalRegistration);
 app.use('/ur', UserRegistration);
 app.use('/login', login);
-
+app.use('/ad', adddonor);
+app.use('/getHospital',getHospital);
 app.listen(4000, () => console.log("Server is up and running"));

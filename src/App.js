@@ -93,7 +93,9 @@ export default class App extends React.Component {
               </Route>
 
               <Route path="/udashboard">
-                {isloggedIn && users ? <Redirect to='/udashboard' /> : <Redirect to='/udashboard' /> }
+                {/* {isloggedIn && users ? <Redirect to='/udashboard' /> : <Redirect to='/udashboard' /> }
+                 */}
+                 <UDashboard />
               </Route>
 
               <Route path="/">

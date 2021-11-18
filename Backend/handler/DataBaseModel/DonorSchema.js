@@ -29,9 +29,9 @@ const DonorSchema = new mongoose.Schema({
         required: true
     },
     selectedFile: {
-        type: File,
+        type: Buffer,
         allowNull: false,
-        required: true
+        // required: true
     },
     city: {
         type: String,
