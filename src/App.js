@@ -7,13 +7,14 @@ import {
 } from "react-router-dom";
 
 import React from 'react'
-import { Login, DRegister, HRegister } from "./Screens/index";
+import { Login, DRegister, HRegister, UDashboard} from "./Screens/index";
 import HomePage from './Screens/HomePage'
 import User from "./user"
 import Huser from "./Huser"
 import Donar from './Screens/donar'
 import AuthService from "./services/auth.service"
 import DashBoard from './Screens/HospitalScreens/DashBoard'
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -89,6 +90,10 @@ export default class App extends React.Component {
 
               <Route path="/admin">
                 {isloggedIn && isAdmin ? <Redirect to='/ADashboard' /> : <Redirect to='/' /> }
+              </Route>
+
+              <Route path="/udashboard">
+                {isloggedIn && users ? <Redirect to='/udashboard' /> : <Redirect to='/udashboard' /> }
               </Route>
 
               <Route path="/">
