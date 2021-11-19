@@ -1,6 +1,6 @@
 const MicroServiceResponse = require('../../handler/ResponseModels/MicroServiceResponse');
 var addonoristration = require('../../handler/DataBaseModel/DonorSchema');
-var addrequest = require('../../handler/DataBaseModel/request');
+var addrequest = require('../../handler/DataBaseModel/Donarrequest');
 // const mongodbutil = require('../../config/database');
 
 const addonor = async function (req, res) {

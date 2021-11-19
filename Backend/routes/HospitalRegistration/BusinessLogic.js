@@ -1,6 +1,6 @@
 const MicroServiceResponse = require('../../handler/ResponseModels/MicroServiceResponse');
 var HospitalRegistration = require('../../handler/DataBaseModel/HospitalSchema');
-// const mongodbutil = require('../../config/database');
+var hospitalrequest = require('../../handler/DataBaseModel/Hospitalsrequest');
 var bcrypt = require("bcryptjs");
 
 const HospitalReg = async function (req, res) {
@@ -27,7 +27,16 @@ const HospitalReg = async function (req, res) {
                 .then(data => {
                     // microServiceResponse.data = data;
                     // resolve(microServiceResponse);
-                    res.status(200).json(data)
+                    const reqhospitals = new hospitalrequest({
+                        hid:data._id,
+                    })
+                    reqhospitals.save()
+                    .then(result => {
+                        res.status(200).json(data)
+                    })
+                    .catch(err=>{
+                        res.status(203).send({ message:"Problem occured in sending request please contact to admin ...."});
+                    })
                 })
                 .catch(err => {
                     console.log(err);
@@ -36,7 +45,7 @@ const HospitalReg = async function (req, res) {
                     res.status(203).send({ message:"Problem occured in saving data ...."});
                 })
         } catch (err) {
-            console.log('Error catched in Hpspital Registration : ' + err.name + " : " + err.message);
+            console.log('Error catched in Hospital Registration : ' + err.name + " : " + err.message);
 
             // microServiceResponse.MicroserviceErrorResponseListForUI.push(err.message);
             // microServiceResponse.MicroserviceErrorResponseList.push(err);

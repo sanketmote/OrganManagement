@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const DonorSchema = new mongoose.Schema({
     uid: {
-        type: Number,
+        type: String,
         allowNull: false,
         foreignKey: true,
     },

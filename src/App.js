@@ -14,7 +14,7 @@ import Huser from "./Huser"
 import Donar from './Screens/donar'
 import AuthService from "./services/auth.service"
 import DashBoard from './Screens/HospitalScreens/DashBoard'
-
+import ADashboard from './Screens/Admin/ADashboard'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -30,8 +30,8 @@ export default class App extends React.Component {
     };
   }
 
-  getvals = async() => {
-    const user = await AuthService.getCurrentUser();
+  componentDidMount() {
+    const user = AuthService.getCurrentUser();
 
     if (user) {
       this.setState({
@@ -48,7 +48,7 @@ export default class App extends React.Component {
     AuthService.logout();
   }
   render() {
-    this.getvals();
+
     const { isloggedIn, users, hospitals , isAdmin} = this.state;
     // alert(isloggedIn, users, hospitals);
     return (
@@ -79,9 +79,14 @@ export default class App extends React.Component {
 
               <Route path="/HDashboard">
                 {/* <DashBoard /> */}
-                {isloggedIn && hospitals ? <DashBoard /> : <Redirect to="/login" />}
+                {/* {isloggedIn && hospitals ? <DashBoard /> : <Redirect to="/login" />} */}
+                <DashBoard />
               </Route>
 
+              <Route path="/ADashboard">
+                <ADashboard />
+              </Route>
+              
               <Route path="/donar">
                 {/* {isloggedIn && users ? <Donar /> : <Redirect to="/login" />}
                  */}

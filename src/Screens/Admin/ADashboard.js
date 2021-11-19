@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from "react";
 import Axios from 'axios'
-
+import AuthService from "../../services/auth.service";
 export default function DashBoard() {
     const [data, setData] = useState([]);
 
@@ -8,10 +9,19 @@ export default function DashBoard() {
         require("../../styles/bootstrap.min.css");
         require("../../styles/tooplate.css");
         // debugger;
-        Axios
-            .get("http://localhost:2345/Api/employee/DemoData")
+        const user = AuthService.getCurrentUser();
+        console.log("user");
+        if(user.roles == "Admin") {
+            Axios
+            .get("http://localhost:4000/gethosrequest?hid=")
             .then(result => setData(result.data));
         console.log(data);
+        } else {
+            alert("You are not allowed to access this page");
+            var link = '/login'
+            window.location.href = link;
+
+        }
         // debugger;
     }, []);
 
@@ -34,7 +44,7 @@ export default function DashBoard() {
 
                                 </div>
                                 <div class="col-md-4 col-sm-12 text-right">
-                                    <a href="#" class="btn btn-small btn-primary">Recipents</a>
+                                    <a href="#" class="btn btn-small btn-primary">Logout</a>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -42,8 +52,7 @@ export default function DashBoard() {
                                     <thead>
                                         <tr class="tm-bg-gray">
                                             <th scope="col">sr no</th>
-                                            <th scope="col">Donar Name</th>
-                                            <th scope="col" class="text-center">Organ</th>
+                                            <th scope="col">Hospital Name</th>
                                             <th scope="col">Request Date</th>
                                         </tr>
                                     </thead>
@@ -54,7 +63,6 @@ export default function DashBoard() {
                                                 1.
                                             </th>
                                             <td class="tm-product-name">S K S </td>
-                                            <td class="text-center">EYE</td>
 
                                             <td>2021-11-28</td>
                                         </tr>
@@ -64,7 +72,6 @@ export default function DashBoard() {
                                                 2.
                                             </th>
                                             <td class="tm-product-name">W K S</td>
-                                            <td class="text-center">Heart</td>
 
                                             <td>2021-11-24</td>
                                             {/* <!-- <td><i class="fas fa-trash-alt tm-trash-icon"></i></td> --> */}
@@ -117,4 +124,4 @@ export default function DashBoard() {
 
     );
 }
-// }
+        // }

@@ -8,6 +8,7 @@ const getHospital = async function (req, res) {
         try {
             findhosfilter = {}
             hospitaldata = [];
+            keys =[];
             console.log(req.query)
             if(req.query.state && req.query.state.length > 0){
                 findhosfilter.state = req.query.state
@@ -20,7 +21,7 @@ const getHospital = async function (req, res) {
                 findhosfilter.city = req.query.city
             }
             console.log(findhosfilter)
-            gethospitals.find(findhosfilter,{_id:0,hosname:1}, function(err,data){
+            gethospitals.find(findhosfilter,{hosname:1}, function(err,data){
                 if(err) {
                     res.status(203).send({message:"Problem occured in database"});
                     throw err;
@@ -29,11 +30,12 @@ const getHospital = async function (req, res) {
                     if(data.length > 0){
                         for(var i=0;i<data.length;i++){
                             hospitaldata[i] = data[i].hosname;
+                            keys[i] = data[i]._id;
                         }
                     } else {
                         hospitaldata = []
                     }
-                    res.send(Object.values(hospitaldata));
+                    res.send({data:Object.values(hospitaldata),key:keys});
                 }
             })
 

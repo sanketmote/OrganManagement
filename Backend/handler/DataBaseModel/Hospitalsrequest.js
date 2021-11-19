@@ -1,18 +1,8 @@
 const mongoose = require('mongoose');
 
 const requestschema = new mongoose.Schema({
-    did: {
-        type: String,
-        allowNull: false,
-        foreignKey: true,
-    },
-    uid: {
-        type: Number,
-        allowNull: false,
-        foreignKey: true,
-    },
     hid:{
-        type: Number,
+        type: String,
         allowNull: false,
         foreignKey: true,
     },
@@ -27,4 +17,4 @@ const requestschema = new mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('request', requestschema);
+module.exports = mongoose.model('hospitalrequest', requestschema);
