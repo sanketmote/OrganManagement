@@ -6,12 +6,9 @@ class AuthService {
     async login(loginval) {
         return await axios.post(API_URL + "login", loginval)
             .then(res => {
-                alert(res.data);
-                console.log(res.data);
                 if (!res.data.message) {
                     if (res.data.accessToken) {
                         console.log(res.data);
-                        alert("Access : " + res.data.accessToken);
                         localStorage.setItem("user", JSON.stringify(res.data));
                         console.log(JSON.parse(localStorage.getItem('user')));
                     }
@@ -26,7 +23,7 @@ class AuthService {
                     }
                     return res.data;
                 } else {
-                    return res;
+                    return res.data;
                 }
             })
             .catch(err => {

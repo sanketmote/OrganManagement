@@ -16,7 +16,7 @@ const login = async function (req, res) {
         try {
             var collection = req.body.role;
             if (collection === 'users') {
-                UserRegistration.find({ email: req.body.email }, function (err, docs) {
+                UserRegistration.find({ email: req.body.email,role:collection }, function (err, docs) {
                     if (err) throw err;
                     if (docs.length > 0) {
                         console.log(docs);
@@ -44,13 +44,13 @@ const login = async function (req, res) {
                         }
 
                     } else {
-                        res.status(203).send({ message: "Invalid Email Id" });
+                        res.status(203).send({ message: "Invalid Email Id or Invalid Role" });
                     }
                     // console.log("Hello");
 
                 });
             } else if (collection === 'Hospitals') {
-                HospitalRegistration.find({ email: req.body.email }, function (err, docs) {
+                HospitalRegistration.find({ email: req.body.email,role:collection}, function (err, docs) {
                     if (err) throw err;
                     if (docs.length > 0) {
                         var passwordIsValid = bcrypt.compareSync(
@@ -78,13 +78,13 @@ const login = async function (req, res) {
 
                     } else {
                         console.log(docs)
-                        res.status(203).send({ message: "Invalid Email or Password", err: err });
+                        res.status(203).send({ message: " Invalid Email Id or Invalid Role", err: err });
                     }
                     // console.log("Hello");
                 });
             } else {
                 if (collection === 'Admin') {
-                    UserRegistration.find({ email: req.body.email }, function (err, docs) {
+                    UserRegistration.find({ email: req.body.email,role:collection }, function (err, docs) {
                         if (err) throw err;
                         if (docs.length > 0) {
                             var passwordIsValid = bcrypt.compareSync(
@@ -113,7 +113,7 @@ const login = async function (req, res) {
 
                         } else {
                             console.log(docs)
-                            res.status(203).send({ message: "Invalid Email ", err: err });
+                            res.status(203).send({ message: "Invalid Email Id or Invalid Role", err: err });
                         }
                         // console.log("Hello");
                     });
