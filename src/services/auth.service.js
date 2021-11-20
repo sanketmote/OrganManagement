@@ -10,6 +10,7 @@ class AuthService {
                 console.log(res.data);
                 if (!res.data.message) {
                     if (res.data.accessToken) {
+                        console.log(res.data);
                         alert("Access : " + res.data.accessToken);
                         localStorage.setItem("user", JSON.stringify(res.data));
                         console.log(JSON.parse(localStorage.getItem('user')));
@@ -36,6 +37,7 @@ class AuthService {
 
     logout() {
         localStorage.removeItem("user");
+        window.location = '/'
     }
 
     userregister(regdata) {
@@ -46,9 +48,9 @@ class AuthService {
         return axios.post(API_URL + "hr", regdata);
     }
 
-    getCurrentUser() {
-        console.log(JSON.parse(localStorage.getItem('user')))
-        return JSON.parse(localStorage.getItem('user'));
+    async getCurrentUser() {
+        // console.log(JSON.parse(localStorage.getItem('user')))
+        return await JSON.parse(localStorage.getItem('user'));
     }
 }
 

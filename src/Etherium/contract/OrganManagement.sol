@@ -156,7 +156,7 @@ contract OrganChain {
     
     function gethospitalcount() public view returns(uint256)
     {
-        return(hospitalarr.length);
+        return (hospitalarr.length);
     }
     
     //recipient functions

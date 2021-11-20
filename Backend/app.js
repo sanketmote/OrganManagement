@@ -37,10 +37,13 @@ const login = require('./routes/Login/controller');
 const adddonor = require('./routes/AddDonor/controller');
 const getHospital = require('./routes/GetHospitals/controller');
 const getrequest = require('./routes/GetRequests/controller');
+const verifyhospital = require('./routes/verifyhospital/controller')
+
 app.use('/hr', HospitalRegistration);
 app.use('/ur', UserRegistration);
 app.use('/login', login);
 app.use('/ad', adddonor);
 app.use('/getrequest', getrequest);
 app.use('/getHospital',getHospital);
+app.use('/verifyhospital',verifyhospital);
 app.listen(4000, () => console.log("Server is up and running"));

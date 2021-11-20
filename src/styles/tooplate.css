@@ -83,6 +83,7 @@ a:focus {
 }
 
 .tm-block-title img {
+  /* src: ; */
   border-radius: 50%;
  }
 .tm-content-row {
@@ -507,4 +508,13 @@ footer {
   text-align: center;
   margin-top:10px;
 
+}
+
+.footerStyle {
+  text-align: center;
+}
+
+.footerStyle button {
+  padding:10px;
+  margin:5px;
 }

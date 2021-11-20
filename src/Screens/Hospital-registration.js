@@ -5,7 +5,7 @@ import React from "react";
 import axios from 'axios';
 import formdata from '../services/state'
 import web from "../Etherium/web";
-import contract from "../Etherium/contrctInstance";
+import instance from "../Etherium/contrctInstance";
 export class HRegister extends React.Component {
   constructor(props) {
     super(props);
@@ -100,7 +100,7 @@ export class HRegister extends React.Component {
     // Array(parseInt(countProductsAddedInLaunch)).fill().map((element , index)=>{
 
     // const accounts = await web.eth.getAccounts();
-    const len = await contract.methods.gethospitalcount().call();
+    const len = await instance.methods.gethospitalcount().call();
     console.log(len);
     // const a1 =   
     // })
@@ -110,35 +110,46 @@ export class HRegister extends React.Component {
     event.preventDefault()
     try {
       const accounts = await web.eth.getAccounts();
+      console.log(accounts[0])
+      if (!accounts[0]) {
+        alert("Please add metamaskid")
+        var link = '#'
+        window.location.href = link;
+      } else {
+        // creatRequestHospital
+        await instance.methods.creatRequestHospital(this.state.hname).send({from:accounts[0]});
+        const len =await instance.methods.gethospitalcount().call();
+        console.log(len);
+        alert(accounts[0])
+        const registration = {
+          hosname: this.state.hname,
+          mobileno: this.state.mobileno,
+          email: this.state.email,
+          city: this.state.city,
+          state: this.state.state1,
+          district: this.state.district,
+          country: this.state.country,
+          address: this.state.hosadd,
+          password: this.state.password,
+          metamaskid: accounts[0]
+        }
 
-      alert(accounts[0])
-      const registration = {
-        hosname: this.state.hname,
-        mobileno: this.state.mobileno,
-        email: this.state.email,
-        city: this.state.city,
-        state: this.state.state1,
-        district: this.state.district,
-        country: this.state.country,
-        address: this.state.hosadd,
-        password: this.state.password,
-        metamaskid: accounts[0]
+        axios.post('http://localhost:4000/hr/', registration)   /// After Hosting change to hosted backend name
+          .then(res => {
+            console.log(res);
+            if (!res.data.message) {
+              var link = '/login'
+              window.location.href = link;
+            } else {
+              alert(res.data.message);
+            }
+
+          })
+          .catch(err => console.log(err));
+        // await instance.methods.creatRequestHospital(this.state.hname).send({ from: accounts[0], gasPrice: "210000" });
       }
-
-      axios.post('http://localhost:4000/hr/', registration)   /// After Hosting change to hosted backend name
-        .then(res => {
-          console.log(res);
-          if (!res.data.message) {
-            var link = '/login'
-            window.location.href = link;
-          } else {
-            alert(res.data.message);
-          }
-
-        })
-        .catch(err => console.log(err));
-      await contract.methods.creatRequestHospital(this.state.hname).send({ from: accounts[0], gasPrice: "210000" });
     } catch (err) {
+      console.log(err);
       alert("You Don't Have Metamask extension we can't fetch so please enable it");
     }
   }

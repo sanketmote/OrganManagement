@@ -1,30 +1,63 @@
-
+import pic from "../../Images/admin.png";
 import React, { useState, useEffect } from "react";
 import Axios from 'axios'
+import Modal from '../../services/Model';
+import { Table, Button } from 'react-bootstrap';
 import AuthService from "../../services/auth.service";
+import instance from "../../Etherium/contrctInstance";
+var user = {};
+// var isOpen = false;
+var index = null;
 export default function DashBoard() {
     const [data, setData] = useState([]);
-
-    useEffect(() => {
+    const [isOpen, setisOpen] = useState(false);
+    useEffect(async () => {
         require("../../styles/bootstrap.min.css");
         require("../../styles/tooplate.css");
         // debugger;
-        const user = AuthService.getCurrentUser();
-        console.log("user");
-        if(user.roles == "Admin") {
-            Axios
-            .get("http://localhost:4000/gethosrequest?hid=")
-            .then(result => setData(result.data));
-        console.log(data);
+        user = await AuthService.getCurrentUser();
+        console.log(user)
+        if (user) {
+            if (user.roles == "Admin") {
+                const len = await instance.methods.gethospitalcount().call();
+                // console.log(len);
+                const adddata = [];
+                for (var i = 0; i < len; i++) {
+                    const hid = await instance.methods.hospitalarr(i).call();
+                    const hinfo = await instance.methods.hospital(hid).call();
+                    // console.log(hinfo['added'])
+                    if (hinfo['added'] == false) {
+                        Axios
+                            .get("http://localhost:4000/verifyhospital?hid=" + hid)
+                            .then(result => {
+                                adddata.push(result.data[0])
+                                console.log(result.data[0])
+                                setData(adddata);
+                            });
+                    }
+                }
+            } else {
+                alert("You are not allowed to access this page");
+                var link = '/login'
+                window.location.href = link;
+
+            }
         } else {
-            alert("You are not allowed to access this page");
             var link = '/login'
             window.location.href = link;
-
         }
         // debugger;
     }, []);
 
+    function toggleModal(id) {
+        index = id;
+        setisOpen(!isOpen);
+        console.log('toggleModal called', isOpen);
+    }
+    function logout() {
+        console.log('logout called');
+        AuthService.logout();
+    }
     // s = () => {
     //     require("../../styles/bootstrap.min.css");
     //     require("../../styles/tooplate.css");
@@ -44,7 +77,10 @@ export default function DashBoard() {
 
                                 </div>
                                 <div class="col-md-4 col-sm-12 text-right">
-                                    <a href="#" class="btn btn-small btn-primary">Logout</a>
+                                    <Button variant="info" className="btn btn-small btn-primary" onClick={() => logout(index)} >
+                                        Logout
+                                    </Button>
+
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -54,34 +90,32 @@ export default function DashBoard() {
                                             <th scope="col">sr no</th>
                                             <th scope="col">Hospital Name</th>
                                             <th scope="col">Request Date</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">
-
-                                                1.
-                                            </th>
-                                            <td class="tm-product-name">S K S </td>
-
-                                            <td>2021-11-28</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                {/* <!-- <input type="checkbox" aria-label="Checkbox"> --> */}
-                                                2.
-                                            </th>
-                                            <td class="tm-product-name">W K S</td>
-
-                                            <td>2021-11-24</td>
-                                            {/* <!-- <td><i class="fas fa-trash-alt tm-trash-icon"></i></td> --> */}
-                                        </tr>
+                                        {data.map((item, index) => {
+                                            return <tr>
+                                                <th scope="row">{index}.</th>
+                                                <td>{item.hosname}</td>
+                                                <td>{item.date}</td>
+                                                <td>
+                                                    <Button variant="info" onClick={() => toggleModal(index)} >
+                                                        Details
+                                                    </Button>
+                                                </td>
+                                                {/* <td onClick={openDropDown} >verifyhospital</td>
+                                                {open === true ? openList : null} */}
+                                            </tr>
+                                        })}
 
                                     </tbody>
                                 </table>
+
+
                             </div>
 
-                            <div class="tm-table-mt tm-table-actions-row">
+                            {/* <div class="tm-table-mt tm-table-actions-row">
 
                                 <div class="tm-table-actions-col-right">
                                     <span class="tm-pagination-label">Page</span>
@@ -98,28 +132,59 @@ export default function DashBoard() {
                                         </ul>
                                     </nav>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 
                     <div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
 
                         <div class="bg-white tm-block">
-                            <h2 class="tm-block-title">Hospital Name</h2>
-
                             <h2 class="tm-block-title">Profile Image</h2>
                             <div class="tm-block-title">
-                                <img src="img/profile-image.png" alt="Profile Image" />
+                                <img src={pic} alt="Profile Image" />
                             </div>
-
-
-                            <h5 class="info">Addres - WCE sangli</h5>
-                            <h5 class="info">Meta Mask ID - </h5>
+                            <h2 class="tm-block-title">{user.fullName}</h2>
+                            <h5 class="info">Mobile No - {user.mobileno}</h5>
+                            <h5 class="info">Email id - {user.email}</h5>
                         </div>
                     </div>
 
                 </div>
             </div>
+
+            <Modal show={isOpen}
+                onClose={() => toggleModal({ index })} metamaskid={data[index] ? data[index].metamaskid : ''}>
+                <Table className="table">
+                    <tbody>
+
+                        <tr>
+                            <th>Hospital Name </th><td> {data[index] ? data[index].hosname : ''}</td>
+                        </tr>
+                        <tr>
+                            <th>Email Id  </th><td> {data[index] ? data[index].email : ''}</td>
+                        </tr>
+                        <tr>
+                            <th>Mobile No  </th><td> {data[index] ? data[index].mobileno : ''}</td>
+                        </tr>
+                        <tr>
+                            <th>Address  </th><td> {data[index] ? data[index].address : ''}</td>
+                        </tr>
+                        <tr>
+                            <th>Country  </th><td> {data[index] ? data[index].country : ''}</td>
+                        </tr>
+                        <tr>
+                            <th>State  </th><td> {data[index] ? data[index].state : ''}</td>
+                        </tr>
+                        <tr>
+                            <th>District  </th><td> {data[index] ? data[index].district : ''}</td>
+                        </tr>
+                        <tr>
+                            <th>City  </th><td> {data[index] ? data[index].city : ''}</td>
+                        </tr>
+                    </tbody>
+                </Table>
+
+            </Modal>
         </div>
 
     );

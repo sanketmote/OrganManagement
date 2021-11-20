@@ -84,7 +84,7 @@ const login = async function (req, res) {
                 });
             } else {
                 if (collection === 'Admin') {
-                    HospitalRegistration.find({ email: req.body.email }, function (err, docs) {
+                    UserRegistration.find({ email: req.body.email }, function (err, docs) {
                         if (err) throw err;
                         if (docs.length > 0) {
                             var passwordIsValid = bcrypt.compareSync(
@@ -100,14 +100,14 @@ const login = async function (req, res) {
                                 var token = jwt.sign({ id: docs[0].id }, config.secret, {
                                     expiresIn: 864000000
                                 });
-                                res.status(200).send({
-                                    id: docs.id,
-                                    fullName: docs.fullName,
-                                    mobileno: docs.mobileno,
-                                    email: docs.email,
-                                    isAdmin:docs.isAdmin,
+                                res.status(200).json({
+                                    id: docs[0].id,
+                                    fullName: docs[0].fullName,
+                                    mobileno: docs[0].mobileno,
+                                    email: docs[0].email,
+                                    isAdmin:docs[0].isAdmin,
                                     roles: 'Admin',
-                                    accessToken: token
+                                    accessToken: token,
                                 });
                             }
 
