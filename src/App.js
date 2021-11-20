@@ -84,6 +84,7 @@ export default class App extends React.Component {
               </Route>
 
               <Route path="/ADashboard">
+                {isloggedIn && isAdmin ? <ADashboard /> : <Redirect to="/login" />}
                 <ADashboard />
               </Route>
               

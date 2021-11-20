@@ -5,20 +5,22 @@ import Modal from '../../services/Model';
 import { Table, Button } from 'react-bootstrap';
 import AuthService from "../../services/auth.service";
 import instance from "../../Etherium/contrctInstance";
-var user = {};
 // var isOpen = false;
+const user ={}
 var index = null;
 export default function DashBoard() {
     const [data, setData] = useState([]);
     const [isOpen, setisOpen] = useState(false);
+    const [user, setUser] = useState({});
     useEffect(async () => {
         require("../../styles/bootstrap.min.css");
         require("../../styles/tooplate.css");
         // debugger;
-        user = await AuthService.getCurrentUser();
-        console.log(user)
-        if (user) {
-            if (user.roles == "Admin") {
+        const tmpUser = await AuthService.getCurrentUser()
+        setUser(tmpUser);
+        console.log(tmpUser)
+        if (tmpUser) {
+            if (tmpUser.roles == "Admin") {
                 const len = await instance.methods.gethospitalcount().call();
                 // console.log(len);
                 const adddata = [];
@@ -66,27 +68,27 @@ export default function DashBoard() {
     // render(){
     // this.s();
     return (
-        <div class="" id="home">
-            <div class="container">
-                <div class="row tm-content-row tm-mt-big">
-                    <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
-                        <div class="bg-white tm-block h-100">
-                            <div class="row">
-                                <div class="col-md-8 col-sm-12">
-                                    <h2 class="tm-block-title d-inline-block"> Requests </h2>
+        <div className="" id="home">
+            <div className="container">
+                <div className="row tm-content-row tm-mt-big">
+                    <div className="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+                        <div className="bg-white tm-block h-100">
+                            <div className="row">
+                                <div className="col-md-8 col-sm-12">
+                                    <h2 className="tm-block-title d-inline-block"> Requests </h2>
 
                                 </div>
-                                <div class="col-md-4 col-sm-12 text-right">
+                                <div className="col-md-4 col-sm-12 text-right">
                                     <Button variant="info" className="btn btn-small btn-primary" onClick={() => logout(index)} >
                                         Logout
                                     </Button>
 
                                 </div>
                             </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                            <div className="table-responsive">
+                                <table className="table table-hover table-striped tm-table-striped-even mt-3">
                                     <thead>
-                                        <tr class="tm-bg-gray">
+                                        <tr className="tm-bg-gray">
                                             <th scope="col">sr no</th>
                                             <th scope="col">Hospital Name</th>
                                             <th scope="col">Request Date</th>
@@ -115,20 +117,20 @@ export default function DashBoard() {
 
                             </div>
 
-                            {/* <div class="tm-table-mt tm-table-actions-row">
+                            {/* <div className="tm-table-mt tm-table-actions-row">
 
-                                <div class="tm-table-actions-col-right">
-                                    <span class="tm-pagination-label">Page</span>
-                                    <nav aria-label="Page navigation" class="d-inline-block">
-                                        <ul class="pagination tm-pagination">
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item">
-                                                <span class="tm-dots d-block">...</span>
+                                <div className="tm-table-actions-col-right">
+                                    <span className="tm-pagination-label">Page</span>
+                                    <nav aria-label="Page navigation" className="d-inline-block">
+                                        <ul className="pagination tm-pagination">
+                                            <li className="page-item active"><a className="page-link" href="#">1</a></li>
+                                            <li className="page-item"><a className="page-link" href="#">2</a></li>
+                                            <li className="page-item"><a className="page-link" href="#">3</a></li>
+                                            <li className="page-item">
+                                                <span className="tm-dots d-block">...</span>
                                             </li>
-                                            <li class="page-item"><a class="page-link" href="#">13</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">14</a></li>
+                                            <li className="page-item"><a className="page-link" href="#">13</a></li>
+                                            <li className="page-item"><a className="page-link" href="#">14</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -136,16 +138,16 @@ export default function DashBoard() {
                         </div>
                     </div>
 
-                    <div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+                    <div className="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
 
-                        <div class="bg-white tm-block">
-                            <h2 class="tm-block-title">Profile Image</h2>
-                            <div class="tm-block-title">
+                        <div className="bg-white tm-block">
+                            <h2 className="tm-block-title">Profile Image</h2>
+                            <div className="tm-block-title">
                                 <img src={pic} alt="Profile Image" />
                             </div>
-                            <h2 class="tm-block-title">{user.fullName}</h2>
-                            <h5 class="info">Mobile No - {user.mobileno}</h5>
-                            <h5 class="info">Email id - {user.email}</h5>
+                            <h2 className="tm-block-title">{user.fullName}</h2>
+                            <h5 className="info">Mobile No - {user.mobileno}</h5>
+                            <h5 className="info">Email id - {user.email}</h5>
                         </div>
                     </div>
 
