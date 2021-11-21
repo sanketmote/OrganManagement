@@ -7,7 +7,7 @@ import formdata from '../services/state'
 import AuthService from '../services/auth.service'
 // const Web3=require('web3');
 // todo : -> fetch list of hospitals according to city , district , state .
-export default class Donar extends React.Component {
+export class Donar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

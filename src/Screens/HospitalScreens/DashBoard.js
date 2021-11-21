@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from 'axios'
 
-export default function DashBoard() {
+export function DashBoard() {
     const [data, setData] = useState([]);
 
     useEffect(() => {

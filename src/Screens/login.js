@@ -54,7 +54,8 @@ export class Login extends React.Component {
 
     const res = await AuthService.login(loginval);
     if(!res.message){
-      alert('Logging .. ');
+      // alert('Logging .. ');
+        window.location.href = '/login'
     } else {
       alert(res.message);
     }

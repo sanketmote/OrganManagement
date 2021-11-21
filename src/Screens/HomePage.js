@@ -14,7 +14,7 @@ import {
 // import { Login, Register } from "./Screens/index";
 // import '../styles/home.css'
 
-class HomePage extends React.Component {
+export class HomePage extends React.Component {
   s = () => {
     require("../styles/home.css");
   }
@@ -72,5 +72,3 @@ class HomePage extends React.Component {
 //     </div>
 //   );
 // }
-
-export default HomePage;

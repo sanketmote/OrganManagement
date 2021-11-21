@@ -14,13 +14,13 @@ body {
   padding-right: 50px;
 }
 
-.bg02 {
+/* .bg02 {
 	/* background-image: url(../img/dash-bg-02.jpg); */
-}
+/* } */
 
-.bg03 {
+/* .bg03 { */
 	/* background-image: url(../img/dash-bg-03.jpg); */
-}
+/* } */ */
 
 a {
   transition: all 0.3s ease;
@@ -517,4 +517,9 @@ footer {
 .footerStyle button {
   padding:10px;
   margin:5px;
+}
+
+.isdone {
+  text-align: center;
+  color: rgb(255, 72, 0)
 }

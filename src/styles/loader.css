@@ -1,0 +1,13 @@
+.backimage { 
+  background-image: url(../Images/backgroundhome.jpg)!important;
+  height: 100%; 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.Hypnosis {
+    align-items: center;
+    position: absolute;
+      top: 50%;
+      left: 50%;
+  }

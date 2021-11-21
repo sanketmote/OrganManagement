@@ -12,15 +12,6 @@ class AuthService {
                         localStorage.setItem("user", JSON.stringify(res.data));
                         console.log(JSON.parse(localStorage.getItem('user')));
                     }
-                    if (loginval.role === 'users') {
-                        window.location = '/user'
-                    }
-                    if (loginval.role === 'Hospitals') {
-                        window.location = '/HDashboard' //#endregion
-                    }
-                    if (loginval.isAdmin=== 'Admin') {
-                        window.location = '/ADashboard' //#endregion
-                    }
                     return res.data;
                 } else {
                     return res.data;
@@ -45,9 +36,9 @@ class AuthService {
         return axios.post(API_URL + "hr", regdata);
     }
 
-    async getCurrentUser() {
+    getCurrentUser() {
         // console.log(JSON.parse(localStorage.getItem('user')))
-        return await JSON.parse(localStorage.getItem('user'));
+        return JSON.parse(localStorage.getItem('user'));
     }
 }
 
