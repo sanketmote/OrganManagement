@@ -7,22 +7,24 @@ import Hypnosis from "../loader";
 import { Table, Button } from 'react-bootstrap';
 import AuthService from "../../services/auth.service";
 import instance from "../../Etherium/contrctInstance";
-var user = {};
 // var isOpen = false;
 var isdone = false;
+const user ={}
 var index = null;
 export function ADashboard() {
     const [data, setData] = useState([]);
     const [isOpen, setisOpen] = useState(false);
     const [datafetched, setdatafetched] = useState(false);
+    const [user, setUser] = useState({});
     useEffect(async () => {
         require("../../styles/bootstrap.min.css");
         require("../../styles/tooplate.css");
         // debugger;
-        user = await AuthService.getCurrentUser();
-        // console.log(user)
-        if (user) {
-            if (user.roles == "Admin") {
+        const tmpUser = await AuthService.getCurrentUser()
+        setUser(tmpUser);
+        console.log(tmpUser)
+        if (tmpUser) {
+            if (tmpUser.roles == "Admin") {
                 const len = await instance.methods.gethospitalcount().call();
                 var cnt =0;
                 const adddata = [];

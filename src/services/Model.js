@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import instance from '../../src/Etherium/contrctInstance';
+import web3 from '../../src/Etherium/web';
 class Modal extends React.Component {
-    verify(event) {
+    async verify(event) {
+        const accounts = await web3.eth.getAccounts();
+        console.log(accounts[0]);
+        await instance.methods.addHospital(event.target.value).send({from:accounts[0]});
         console.log('Verified => ' + event.target.value);
     }
     reject(event) {

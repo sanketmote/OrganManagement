@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const BusinessLogic = require('./BusinessLogic');
+const BusinessLogic = require('./businessLogic');
 
 
 router.post('/', async (req, res, next) => {
