@@ -1,5 +1,5 @@
 const MicroServiceResponse = require('../../handler/ResponseModels/MicroServiceResponse');
-var request = require('../../handler/DataBaseModel/Donarrequest')
+var request = require('../../handler/DataBaseModel/DonorSchema')
 
 const getRequest = async function (req, res) {
     return await new Promise((resolve, reject) => {

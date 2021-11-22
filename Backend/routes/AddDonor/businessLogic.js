@@ -18,6 +18,7 @@ const addonor = async function (req, res) {
                 state: req.body.state,
                 district: req.body.district,
                 // selectedFile: req.body.selectedFile,
+                hid:req.body.hid,
                 metamaskid: req.body.metamaskid,
             });
 

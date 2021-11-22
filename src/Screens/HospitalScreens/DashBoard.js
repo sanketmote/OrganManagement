@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from 'axios'
+import pic from "../../Images/admin.png";
 import Hypnosis from "../loader";
 import { Table, Button } from 'react-bootstrap';
 import AuthService from "../../services/auth.service";
@@ -15,18 +16,31 @@ export function DashBoard() {
         require("../../styles/bootstrap.min.css");
         require("../../styles/tooplate.css");
         // debugger;
-        const accounts=web3.eth.getAccounts();
-        if(accounts[0]){
+        const accounts= await web3.eth.getAccounts();
+        const tmpUser = await AuthService.getCurrentUser()
+        setUser(tmpUser);
+        console.log(tmpUser)
+        console.log(accounts[0]);
+        if(accounts[0] && tmpUser){
             const len=await instance.methods.getDonorcount().call();
             var addData = [];
+            console.log(len);
             for(var i=0; i<len; i++)
             {
                 const donorid=await instance.methods.donorarr(i).call();
-                const DonarInfo =await instance.methods.Donars(donorid).call();
+                const DonarInfo =await instance.methods.Donors(donorid).call();
+                console.log(DonarInfo);
                 if(DonarInfo['hospitalid']===accounts[0]){
                     if(DonarInfo['added']==false){
-                        addData.push(DonarInfo);
-                        setData(addData);
+                        Axios.get("http://localhost:4000/getrequest?hid="+DonarInfo['hospitalid'])
+                        .then(result => {
+                            addData.push(result.data[0])
+                            setData(addData);
+                            console.log(addData);
+                            // setdatafetched(true);
+                        });
+                        // addData.push(DonarInfo);
+                        // setData(addData);
                     }
                 }
             }
@@ -46,27 +60,27 @@ export function DashBoard() {
         )
     } else {
         return (
-            <div class="" id="home">
-                <div class="container">
-                    <div class="row tm-content-row tm-mt-big">
-                        <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
-                            <div class="bg-white tm-block h-100">
-                                <div class="row">
-                                    <div class="col-md-8 col-sm-12">
-                                        <h2 class="tm-block-title d-inline-block"> Requests </h2>
+            <div className="" id="home">
+                <div className="container">
+                    <div className="row tm-content-row tm-mt-big">
+                        <div className="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+                            <div className="bg-white tm-block h-100">
+                                <div className="row">
+                                    <div className="col-md-8 col-sm-12">
+                                        <h2 className="tm-block-title d-inline-block"> Requests </h2>
 
                                     </div>
-                                    <div class="col-md-4 col-sm-12 text-right">
-                                        <a href="#" class="btn btn-small btn-primary">Recipents</a>
+                                    <div className="col-md-4 col-sm-12 text-right">
+                                        <a href="#" className="btn btn-small btn-primary">Recipents</a>
                                     </div>
                                 </div>
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                                <div className="table-responsive">
+                                    <table className="table table-hover table-striped tm-table-striped-even mt-3">
                                         <thead>
-                                            <tr class="tm-bg-gray">
+                                            <tr className="tm-bg-gray">
                                                 <th scope="col">sr no</th>
                                                 <th scope="col">Donar Name</th>
-                                                <th scope="col" class="text-center">Organ</th>
+                                                <th scope="col" className="text-center">Organ</th>
                                                 <th scope="col">Request Date</th>
                                             </tr>
                                         </thead>
@@ -75,8 +89,8 @@ export function DashBoard() {
                                         {data.map((item, index) => {
                                                 return <tr>
                                                     <th scope="row">{index}.</th>
-                                                    <td>{item.hosname}</td>
-                                                    <td>hello</td>
+                                                    <td>{item.selecthospital}</td>
+                                                    <td>{item.orgname}</td>
                                                     <td>{item.date}</td>
                                                     {/* <td onClick={openDropDown} >verifyhospital</td>
                                                     {open === true ? openList : null} */}
@@ -87,40 +101,37 @@ export function DashBoard() {
                                     </table>
                                 </div>
 
-                                <div class="tm-table-mt tm-table-actions-row">
+                                {/* <div className="tm-table-mt tm-table-actions-row">
 
-                                    <div class="tm-table-actions-col-right">
-                                        <span class="tm-pagination-label">Page</span>
-                                        <nav aria-label="Page navigation" class="d-inline-block">
-                                            <ul class="pagination tm-pagination">
-                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item">
-                                                    <span class="tm-dots d-block">...</span>
+                                    <div className="tm-table-actions-col-right">
+                                        <span className="tm-pagination-label">Page</span>
+                                        <nav aria-label="Page navigation" className="d-inline-block">
+                                            <ul className="pagination tm-pagination">
+                                                <li className="page-item active"><a className="page-link" href="#">1</a></li>
+                                                <li className="page-item"><a className="page-link" href="#">2</a></li>
+                                                <li className="page-item"><a className="page-link" href="#">3</a></li>
+                                                <li className="page-item">
+                                                    <span className="tm-dots d-block">...</span>
                                                 </li>
-                                                <li class="page-item"><a class="page-link" href="#">13</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">14</a></li>
+                                                <li className="page-item"><a className="page-link" href="#">13</a></li>
+                                                <li className="page-item"><a className="page-link" href="#">14</a></li>
                                             </ul>
                                         </nav>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
 
-                        <div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+                        <div className="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
 
-                            <div class="bg-white tm-block">
-                                <h2 class="tm-block-title">Hospital Name</h2>
-
-                                <h2 class="tm-block-title">Profile Image</h2>
-                                <div class="tm-block-title">
-                                    <img src="img/profile-image.png" alt="Profile Image" />
+                            <div className="bg-white tm-block">
+                                <h2 className="tm-block-title">{user.fullName}</h2>
+                                <div className="tm-block-title">
+                                    <img src={pic} alt="Profile Image" />
                                 </div>
-
-
-                                <h5 class="info">Addres - WCE sangli</h5>
-                                <h5 class="info">Meta Mask ID - </h5>
+                                <h5 className="info">Mobile No - {user.mobileno}</h5>
+                                <h5 className="info">Email id - {user.email}</h5>
+                                <h5 className="info">Addres - {user.address} </h5>
                             </div>
                         </div>
 

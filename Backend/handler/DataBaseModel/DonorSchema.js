@@ -45,8 +45,13 @@ const DonorSchema = new mongoose.Schema({
     metamaskid: {
         type: String,
         allowNull: true,
-        // required: true,
-        // unique: true,
+        required: true,
+        unique: true,
+    },
+    hid: {
+        type: String,
+        allowNull: true,
+        required: true,
     },
     date: {
         type: Date,

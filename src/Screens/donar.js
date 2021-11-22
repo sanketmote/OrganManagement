@@ -120,68 +120,72 @@ export class Donar extends React.Component {
 
   async onSubmit(event) {
     event.preventDefault()
-
-    // const web3=new Web3(provider);
-    const accounts = await web3.eth.getAccounts();
-
-    const user = AuthService.getCurrentUser();
-    if (!accounts[0]) {
-      alert("Please add metamaskid")
-      var link = '#'
-      window.location.href = link;
-    } else {
-      alert(accounts[0]);
-      const formData = new FormData();
-
-      // Update the formData object
-      formData.append(
-        "myFile",
-        this.state.selectedFile,
-        this.state.selectedFile.name
-      );
-
-      for (var i = 0; i < this.state.keydatahos.data.length; i++) {
-        if (this.state.keydatahos.data[i] === this.state.selecthospital) {
-          this.state.hid = this.state.keydatahos.key[i];
-          break;
-        }
-      }
-
-      if (this.state.hid === '') {
-        alert("Hospital is not selected" + this.state.selecthospital)
+    try {
+      const accounts = await web3.eth.getAccounts();
+      const user = AuthService.getCurrentUser();
+      if (!accounts[0]) {
+        alert("Please add metamaskid")
+        var link = '#'
+        window.location.href = link;
       } else {
-        await instance.methods.creatRequestDonar(this.state.hid,this.state.orgname,this.state.bloodgroup).send({from:accounts[0]});
-        const registration = {
-          fullName: this.state.fullName,
-          bloodgroup: this.state.bloodgroup,
-          selecthospital: this.state.selecthospital,
-          metamaskid: accounts[0],
-          orgname: this.state.orgname,
-          selectedFile: formData,
-          city: this.state.city,
-          district: this.state.district,
-          state: this.state.state1,
-          hid: this.state.hid,
-          uid: user.id
+        alert(accounts[0]);
+        const formData = new FormData();
+
+        // Update the formData object
+        formData.append(
+          "myFile",
+          this.state.selectedFile,
+          this.state.selectedFile.name
+        );
+
+        for (var i = 0; i < this.state.keydatahos.data.length; i++) {
+          if (this.state.keydatahos.data[i] === this.state.selecthospital) {
+            this.state.hid = this.state.keydatahos.key[i];
+            break;
+          }
         }
 
-        axios.post('http://localhost:4000/ad/', registration)   /// After Hosting change to hosted backend name
-          .then(res => {
-            if (!res.data.message) {
-              var link = '/'
-              window.location.href = link;
-            } else {
-              alert(res.data.message);
-            }
+        if (this.state.hid === '') {
+          alert("Hospital is not selected" + this.state.selecthospital)
+        } else {
+          await instance.methods.creatRequestDonar(this.state.hid, this.state.orgname, this.state.bloodgroup).send({ from: accounts[0] });
+          const len = await instance.methods.getDonorcount().call();
+          console.log(len);
+          const registration = {
+            fullName: this.state.fullName,
+            bloodgroup: this.state.bloodgroup,
+            selecthospital: this.state.selecthospital,
+            metamaskid: accounts[0],
+            orgname: this.state.orgname,
+            // selectedFile: this.state.selectedFile,
+            city: this.state.city,
+            district: this.state.district,
+            state: this.state.state1,
+            hid: this.state.hid,
+            uid: user.id,
+          }
 
-          })
-          .catch(err => {
-            console.log(err);
-            alert("Err -> " + err);
-          });
+          axios.post('http://localhost:4000/ad/', registration)   /// After Hosting change to hosted backend name
+            .then(res => {
+              if (!res.data.message) {
+                var link = '/'
+                window.location.href = link;
+              } else {
+                alert(res.data.message);
+              }
+
+            })
+            .catch(err => {
+              console.log(err);
+              alert("Err -> " + err);
+            });
+        }
+
       }
+    } catch (e) {
 
     }
+
 
 
   }

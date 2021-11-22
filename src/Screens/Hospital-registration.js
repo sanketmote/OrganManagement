@@ -120,7 +120,7 @@ export class HRegister extends React.Component {
         await instance.methods.creatRequestHospital(this.state.hname).send({from:accounts[0]});
         const len =await instance.methods.gethospitalcount().call();
         console.log(len);
-        alert(accounts[0])
+        // alert(accounts[0])
         const registration = {
           hosname: this.state.hname,
           mobileno: this.state.mobileno,

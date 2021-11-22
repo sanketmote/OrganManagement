@@ -67,10 +67,11 @@ const login = async function (req, res) {
                                 expiresIn: 864000000
                             });
                             res.status(200).send({
-                                id: docs.id,
-                                fullName: docs.fullName,
-                                mobileno: docs.mobileno,
-                                email: docs.email,
+                                id: docs[0].id,
+                                fullName: docs[0].hosname,
+                                mobileno: docs[0].mobileno,
+                                email: docs[0].email,
+                                address: docs[0].address,
                                 roles: 'Hospitals',
                                 accessToken: token
                             });
