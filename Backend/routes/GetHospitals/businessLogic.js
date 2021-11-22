@@ -21,7 +21,7 @@ const getHospital = async function (req, res) {
                 findhosfilter.city = req.query.city
             }
             console.log(findhosfilter)
-            gethospitals.find(findhosfilter,{hosname:1}, function(err,data){
+            gethospitals.find(findhosfilter,{hosname:1,metamaskid : 1}, function(err,data){
                 if(err) {
                     res.status(203).send({message:"Problem occured in database"});
                     throw err;
@@ -30,7 +30,7 @@ const getHospital = async function (req, res) {
                     if(data.length > 0){
                         for(var i=0;i<data.length;i++){
                             hospitaldata[i] = data[i].hosname;
-                            keys[i] = data[i]._id;
+                            keys[i] = data[i].metamaskid;
                         }
                     } else {
                         hospitaldata = []

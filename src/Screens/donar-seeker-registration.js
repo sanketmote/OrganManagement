@@ -76,7 +76,7 @@ export class DRegister extends React.Component {
   async onSubmit(event) {
     event.preventDefault();
     const accounts=await web.eth.getAccounts();
-    await instance.methods.creatRequestDonar(this.state.metamaskid,'0x988AF3B7649f5dB29B1b40564E14615cd87D606d','EYE','A+').send({from:accounts[0]});
+    // await instance.methods.creatRequestDonar(this.state.metamaskid,'0x988AF3B7649f5dB29B1b40564E14615cd87D606d','EYE','A+').send({from:accounts[0]});
     const registration = {
       fullName: this.state.fullName,
       mobileno: this.state.mobileno,

@@ -32,12 +32,19 @@
 //     );
 //   }
 // }
-import React from 'react'
+import instance from './Etherium/contrctInstance';
+import web3 from './Etherium/web';
+import React from 'react';
 
 export default function User() {
+  async function fetch(){
+      const len = await instance.methods.getDonorcount().call();
+    console.log(len);
+  }
   return (
     <div>
       this is user page 🤟
+      <button onClick={fetch}>fetchData </button>
     </div>
   )
 }

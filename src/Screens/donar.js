@@ -5,6 +5,8 @@ import web3 from "../Etherium/web"
 import "../styles/Registration-login.scss";
 import formdata from '../services/state'
 import AuthService from '../services/auth.service'
+// import web3 from "../Etherium/web";\
+import instance from "../Etherium/contrctInstance";
 // const Web3=require('web3');
 // todo : -> fetch list of hospitals according to city , district , state .
 export class Donar extends React.Component {
@@ -118,8 +120,10 @@ export class Donar extends React.Component {
 
   async onSubmit(event) {
     event.preventDefault()
+
     // const web3=new Web3(provider);
     const accounts = await web3.eth.getAccounts();
+
     const user = AuthService.getCurrentUser();
     if (!accounts[0]) {
       alert("Please add metamaskid")
@@ -136,7 +140,6 @@ export class Donar extends React.Component {
         this.state.selectedFile.name
       );
 
-      // await instance.methods.creatRequestDonar(this.state.metamaskid,this.state.metamaskhospitalid,this.state.organ,this.state.bloodgro)
       for (var i = 0; i < this.state.keydatahos.data.length; i++) {
         if (this.state.keydatahos.data[i] === this.state.selecthospital) {
           this.state.hid = this.state.keydatahos.key[i];
@@ -147,6 +150,7 @@ export class Donar extends React.Component {
       if (this.state.hid === '') {
         alert("Hospital is not selected" + this.state.selecthospital)
       } else {
+        await instance.methods.creatRequestDonar(this.state.hid,this.state.orgname,this.state.bloodgroup).send({from:accounts[0]});
         const registration = {
           fullName: this.state.fullName,
           bloodgroup: this.state.bloodgroup,

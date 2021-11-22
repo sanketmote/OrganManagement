@@ -4,22 +4,40 @@ import Hypnosis from "../loader";
 import { Table, Button } from 'react-bootstrap';
 import AuthService from "../../services/auth.service";
 import instance from "../../Etherium/contrctInstance";
-
+import web3 from "../../Etherium/web";
 export function DashBoard() {
     const [data, setData] = useState([]);
     const [isOpen, setisOpen] = useState(false);
     const [datafetched, setdatafetched] = useState(false);
     const [user, setUser] = useState({});
 
-    useEffect(() => {
+    useEffect(async () => {
         require("../../styles/bootstrap.min.css");
         require("../../styles/tooplate.css");
         // debugger;
-        Axios
-            .get("http://localhost:2345/Api/employee/DemoData")
-            .then(result => setData(result.data));
-        console.log(data);
+        const accounts=web3.eth.getAccounts();
+        if(accounts[0]){
+            const len=await instance.methods.getDonorcount().call();
+            var addData = [];
+            for(var i=0; i<len; i++)
+            {
+                const donorid=await instance.methods.donorarr(i).call();
+                const DonarInfo =await instance.methods.Donars(donorid).call();
+                if(DonarInfo['hospitalid']===accounts[0]){
+                    if(DonarInfo['added']==false){
+                        addData.push(DonarInfo);
+                        setData(addData);
+                    }
+                }
+            }
+        }
+        // Axios
+        //     .get("http://localhost:2345/Api/employee/DemoData")
+        //     .then(result => setData(result.data));
+        // console.log(data);
         // debugger;
+        setdatafetched(true);
+
     }, []);
 
     if (!datafetched) {
