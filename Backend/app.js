@@ -38,11 +38,13 @@ const adddonor = require('./routes/AddDonor/controller');
 const getHospital = require('./routes/GetHospitals/controller');
 const getrequest = require('./routes/GetRequests/controller');
 const verifyhospital = require('./routes/verifyhospital/controller')
+const addseeker = require('./routes/AddSeeker/controller');
 
 app.use('/hr', HospitalRegistration);
 app.use('/ur', UserRegistration);
 app.use('/login', login);
 app.use('/ad', adddonor);
+app.use('/as',addseeker);
 app.use('/getrequest', getrequest);
 app.use('/getHospital',getHospital);
 app.use('/verifyhospital',verifyhospital);
