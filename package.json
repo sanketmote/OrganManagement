@@ -1,5 +1,6 @@
 {
   "name": "organmanagement",
+  "homepage": "https://sanketmote.github.io/OrganManagement/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

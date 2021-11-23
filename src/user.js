@@ -35,7 +35,7 @@
 import instance from './Etherium/contrctInstance';
 import web3 from './Etherium/web';
 import React from 'react';
-
+import Navigationbar from './Screens/User/navigationPage'
 export default function User() {
   async function fetch(){
       const len = await instance.methods.getDonorcount().call();
@@ -43,6 +43,7 @@ export default function User() {
   }
   return (
     <div>
+      <Navigationbar />
       this is user page 🤟
       <button onClick={fetch}>fetchData </button>
     </div>

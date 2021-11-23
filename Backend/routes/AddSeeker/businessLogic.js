@@ -10,11 +10,14 @@ const addseeker = async function (req, res) {
             // console.log("Ok 1");
             const SignedUpUser = new seekerreg({
                 uid: req.body.uid,
+                selecthospital: req.body.selecthospital,
                 bloodgroup: req.body.bloodgroup,
                 orgname: req.body.orgname,
                 city: req.body.city,
                 state: req.body.state,
                 district: req.body.district,
+                // selectedFile: req.body.selectedFile,
+                hid:req.body.hid,
                 metamaskid: req.body.metamaskid,
             });
 

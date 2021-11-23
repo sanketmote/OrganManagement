@@ -8,7 +8,7 @@ import {
 
 import React from 'react'
 import Loader from "./Screens/loader"
-import { Login, DRegister, HRegister, UDashboard, Donar, DashBoard, ADashboard, HomePage } from "./Screens/index";
+import { Login, DRegister, HRegister, UDashboard, Donar, DashBoard, ADashboard, HomePage ,Seeker } from "./Screens/index";
 import User from "./user"
 import Huser from "./Huser"
 import AuthService from "./services/auth.service"
@@ -112,7 +112,11 @@ export default class App extends React.Component {
                  */}
                   <UDashboard />
                 </Route>
-
+                <Route path="/seeker">
+                  {/* {isloggedIn && users ? <Redirect to='/udashboard' /> : <Redirect to='/udashboard' /> }
+                 */}
+                  <Seeker />
+                </Route>
                 <Route path="/">
                   {isloggedIn && users ? <Redirect to='/user' /> : (isloggedIn && hospitals ? <Redirect to='/huser' /> : (isloggedIn && isAdmin ? <Redirect to='/ADashboard' /> : <HomePage />))}
                   <HomePage />
