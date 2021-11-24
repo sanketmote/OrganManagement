@@ -7,6 +7,7 @@ import formdata from '../services/state'
 import AuthService from '../services/auth.service'
 // import web3 from "../Etherium/web";\
 import instance from "../Etherium/contrctInstance";
+
 // const Web3=require('web3');
 // todo : -> fetch list of hospitals according to city , district , state .
 export class Donar extends React.Component {
@@ -23,6 +24,7 @@ export class Donar extends React.Component {
       state1: 'Andhra Pradesh',
       district: 'Anantapur',
       hid: '',
+      role:'',
       hospitalvalue: [],
       keydatahos: []
     }
@@ -38,6 +40,7 @@ export class Donar extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.setData = this.setData.bind(this);
     this.componentWillMount = this.componentWillMount.bind(this);
+    this.changerole = this.changerole.bind(this);
   }
   componentWillMount() {
     axios
@@ -97,6 +100,12 @@ export class Donar extends React.Component {
       state1: event.target.value
     })
 
+  }
+
+  changerole(event) {
+    this.setState({
+      role: event.target.value
+    })
   }
 
   changedistrict(event) {
@@ -202,12 +211,25 @@ export class Donar extends React.Component {
               <span className="login100-form-title p-b-49">
                 Verification Form
               </span>
+
+              <div className="wrap-input100 validate-input m-b-23" data-validate="Email is reauired">
+                <span className="label-input100">Role </span>
+                <select className="input100" name="role" id="role" onChange={this.changerole} value={this.state.role}>
+                  <option value="donar">Donar</option>
+                  <option value="seeker">Seeker</option>
+                  
+                </select>
+
+                <span className="focus-input100" data-symbol="&#xf206;"></span>
+              </div>
+
               <div className="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
                 <span className="label-input100">Full name</span>
                 <input className="input100" type="text" name="fullname" placeholder="Type the recipient name"
                   onChange={this.changefullName} value={this.state.fullName} autoComplete="off" required />
                 <span className="focus-input100" data-symbol="&#xf206;"></span>
               </div>
+
 
               <div className="wrap-input100 validate-input m-b-23" data-validate="bloodgroup is reauired">
                 <span className="label-input100">Blood Group</span>
@@ -216,13 +238,13 @@ export class Donar extends React.Component {
                 <span className="focus-input100" data-symbol="&#xf276;"></span>
               </div>
 
-              <div className="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+              {/* <div className="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
                 <span className="label-input100">Metamask ID</span>
                 <input className="input100" type="text" name="metamaskid" placeholder="Type your metamask ID"
                   onChange={this.changemetamaskid} value={this.state.metamaskid} autoComplete="off" disabled required />
-                {/* Validation left */}
-                <span className="focus-input100" data-symbol="&#xf10c;"></span>
-              </div>
+               
+                <span className="foc-us-input100" data-symbol="&#xf10c;"></span>
+              </div> */}
 
 
               <div className="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">

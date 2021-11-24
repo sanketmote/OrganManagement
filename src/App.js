@@ -8,7 +8,7 @@ import {
 
 import React from 'react'
 import Loader from "./Screens/loader"
-import { Login, DRegister, HRegister, UDashboard, Donar, DashBoard, ADashboard, HomePage } from "./Screens/index";
+import { Login, DRegister, HRegister, UDashboard, Donar, DashBoard, ADashboard, CDashboard, HomePage } from "./Screens/index";
 import User from "./user"
 import Huser from "./Huser"
 import AuthService from "./services/auth.service"
@@ -66,12 +66,17 @@ export default class App extends React.Component {
             <div>
 
               <Switch>
+
+              
+
                 <Route path="/login">
-                  {isloggedIn && users ? <Redirect to='/user' /> : (isloggedIn && hospitals ? <Redirect to='/huser' /> : (isloggedIn && isAdmin ? <Redirect to='/ADashboard' /> : <Login />))}
+                  {/* {isloggedIn && users ? <Redirect to='/user' /> : (isloggedIn && hospitals ? <Redirect to='/huser' /> : (isloggedIn && isAdmin ? <Redirect to='/ADashboard' /> : <Login />))} */}
+                <Login />
                 </Route>
 
                 <Route exact path="/user">
-                  {isloggedIn && users ? <User /> : <Redirect to="/login" />}
+                  {/* {isloggedIn && users ? <User /> : <Redirect to="/login" />} */}
+                  <User />
                 </Route>
 
                 <Route path="/huser">
@@ -93,8 +98,8 @@ export default class App extends React.Component {
                 </Route>
 
                 <Route path="/ADashboard">
-                  {isloggedIn && isAdmin ? <ADashboard /> : <Redirect to='/login' />}
-                  {/* <ADashboard /> */}
+                  {/* {isloggedIn && isAdmin ? <ADashboard /> : <Redirect to='/login' />} */}
+                  <ADashboard />
                 </Route>
 
                 <Route path="/donar">
@@ -113,10 +118,18 @@ export default class App extends React.Component {
                   <UDashboard />
                 </Route>
 
+                <Route path="/CDashboard">
+                  {/* {isloggedIn && users ? <Redirect to='/udashboard' /> : <Redirect to='/udashboard' /> }
+                 */}
+                  <CDashboard />
+                </Route>
+
                 <Route path="/">
-                  {isloggedIn && users ? <Redirect to='/user' /> : (isloggedIn && hospitals ? <Redirect to='/huser' /> : (isloggedIn && isAdmin ? <Redirect to='/ADashboard' /> : <HomePage />))}
+                  {/* {isloggedIn && users ? <Redirect to='/user' /> : (isloggedIn && hospitals ? <Redirect to='/huser' /> : (isloggedIn && isAdmin ? <Redirect to='/ADashboard' /> : <HomePage />))} */}
                   <HomePage />
                 </Route>
+
+                
 
 
               </Switch>

@@ -7,7 +7,7 @@ import {
   } from "react-router-dom";
   
   import React, { useState, useEffect } from "react";
-  import { Login, DRegister, HRegister, UDashboard } from "./Screens/index";
+  import { Login, DRegister, HRegister, UDashboard, CDashboard } from "./Screens/index";
   import HomePage from './Screens/HomePage'
   import User from "./user"
   import Huser from "./Huser"
@@ -104,6 +104,12 @@ import {
               </Route>
   
               <Route path="/udashboard">
+                {/* {isloggedIn && users ? <Redirect to='/udashboard' /> : <Redirect to='/udashboard' /> }
+                   */}
+                <UDashboard />
+              </Route>
+
+              <Route path="/CDashboard">
                 {/* {isloggedIn && users ? <Redirect to='/udashboard' /> : <Redirect to='/udashboard' /> }
                    */}
                 <UDashboard />
