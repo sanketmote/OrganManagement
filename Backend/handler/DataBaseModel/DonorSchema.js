@@ -46,7 +46,6 @@ const DonorSchema = new mongoose.Schema({
         type: String,
         allowNull: true,
         required: true,
-        unique: true,
     },
     hid: {
         type: String,

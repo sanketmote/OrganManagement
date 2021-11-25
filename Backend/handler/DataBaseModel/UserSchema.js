@@ -38,6 +38,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: 'users'
     },
+    firstTime:{
+        type: Boolean,
+        default: true
+    },
     date: {
         type: Date,
         default: Date.now

@@ -11,7 +11,7 @@ import instance from "../Etherium/contrctInstance";
 import { render } from "@testing-library/react";
 
 var isdone = false;
-const user ={}
+const user = {}
 var index = null;
 export function CDashboard() {
     const [data, setData] = useState([]);
@@ -22,42 +22,45 @@ export function CDashboard() {
         require("../styles/bootstrap.min.css");
         require("../styles/tooplate.css");
         // debugger;
-        // const tmpUser = await AuthService.getCurrentUser()
-        // setUser(tmpUser);
-        // console.log(tmpUser)
-        // if (tmpUser) {
-        //     if (tmpUser.roles == "Admin") {
-        //         const len = await instance.methods.gethospitalcount().call();
-        //         var cnt =0;
-        //         const adddata = [];
-        //         for (var i = 0; i < len; i++) {
-        //             const hid = await instance.methods.hospitalarr(i).call();
-        //             const hinfo = await instance.methods.hospital(hid).call();
-        //             if (hinfo['added'] == false) {
-        //                 cnt++;
-        //                 Axios
-        //                     .get("http://localhost:4000/verifyhospital?hid=" + hid)
-        //                     .then(result => {
-        //                         adddata.push(result.data[0])
-        //                         setData(adddata);
-        //                         setdatafetched(true);
-        //                     });
-        //             }
-        //         }
-        //         if(cnt == 0) {
-        //             isdone = true;
-        //             setdatafetched(true);
-        //         }
-        //     } else {
-        //         alert("You are not allowed to access this page");
-        //         var link = '/login'
-        //         window.location.href = link;
+        const tmpUser = await AuthService.getCurrentUser()
+        setUser(tmpUser);
+        console.log(tmpUser)
+        if (tmpUser) {
+            // if (tmpUser.roles == "user") {
+            const len = await instance.methods.gethospitalcount().call();
+            var cnt =0;
+            const adddata = [];
+            // for (var i = 0; i < len; i++) {
+            // const hid = await instance.methods.hospitalarr(i).call();
+            // const hinfo = await instance.methods.hospital(hid).call();
+            // if (hinfo['added'] == false) {
+            
+            Axios
+                .get("http://localhost:4000/getDetails?id=" + tmpUser.id +"&role=Donar")
+                .then(result => {
+                    cnt++;
+                    console.log(result);
+                    isdone = false;
+                    adddata.push(result.data[0])
+                    setData(adddata);
+                    setdatafetched(true);
+                });
+            // }
+            // }
+            if (cnt == 0) {
+                isdone = true;
+                setdatafetched(true);
+            }
+            // } else {
+            //     alert("You are not allowed to access this page");
+            //     var link = '/login'
+            //     window.location.href = link;
 
-        //     }
-        // } else {
-        //     var link = '/login'
-        //     window.location.href = link;
-        // }
+            // }
+        } else {
+            var link = '/login'
+            window.location.href = link;
+        }
         // debugger;
     }, []);
 
@@ -69,11 +72,11 @@ export function CDashboard() {
         AuthService.logout();
     }
 
-    // if (!datafetched) {
-    //     return (
-    //         <Hypnosis />
-    //     )
-    // } else {
+    if (!datafetched) {
+        return (
+            <Hypnosis />
+        )
+    } else {
         return (
             <div className="" id="home" >
                 <div className="container" >
@@ -104,29 +107,28 @@ export function CDashboard() {
                                     <table className="table table-hover table-striped tm-table-striped-even mt-3">
                                         <thead>
                                             <tr className="tm-bg-gray">
-                                            <th scope="col">ID</th>
-                                                 <th scope="col">Username</th>
-                                                 <th scope="col">Blood Group</th>
-                                                 <th scope="col">Recipient</th>
-                                                 <th scope="col">Organ</th>
-                                                 <th scope="col">City</th>
-                                                 <th scope="col">District</th>
-                                                 <th scope="col">State</th>
-                                                 <th scope="col">Country</th>
-                                                 {/* <th>Action</th> */}
+                                                <th scope="col">ID</th>
+                                                {/* <th scope="col">Username</th> */}
+                                                <th scope="col">Blood Group</th>
+                                                {/* <th scope="col">Recipient</th> */}
+                                                <th scope="col">Organ</th>
+                                                <th scope="col">City</th>
+                                                <th scope="col">District</th>
+                                                <th scope="col">State</th>
+                                                {/* <th scope="col">Country</th> */}
+                                                {/* <th>Action</th> */}
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {data.map((item, index) => {
                                                 return <tr>
                                                     <th scope="row">{index}.</th>
-                                                    <td>{item.hosname}</td>
-                                                    <td>{item.date}</td>
-                                                    <td>
-                                                        <Button variant="info" onClick={() => toggleModal(index)} >
-                                                            Details
-                                                        </Button>
-                                                    </td>
+                                                    <td>{item.bloodgroup}</td>
+                                                    <td>{item.orgname}</td>
+                                                    <td>{item.city}</td>
+                                                    <td>{item.district}</td>
+                                                    <td>{item.state}</td>
+
                                                     {/* <td onClick={openDropDown} >verifyhospital</td>
                                                     {open === true ? openList : null} */}
                                                 </tr>
@@ -134,7 +136,7 @@ export function CDashboard() {
 
                                         </tbody>
                                     </table>
-                                    {isdone === true ? <div className="isdone">No Current Request in Inbox</div>: <div></div>}
+                                    {isdone === true ? <div className="isdone">No Current Request in Inbox</div> : <div></div>}
 
                                 </div>
 
@@ -214,4 +216,4 @@ export function CDashboard() {
     }
 
 
-        // }
+}
