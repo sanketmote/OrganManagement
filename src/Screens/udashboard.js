@@ -25,7 +25,7 @@ export class UDashboard extends React.Component {
 
   renderTableData() {
      return this.state.users.map((user, index) => {
-        const { id, username, bloodGroup, Recipient, organ, city, state } = user //destructuring
+        const { id, username, bloodGroup, Recipient, organ, city, district, state, country } = user //destructuring
         return (
            <tr key={id}>
               <td>{id}</td>
@@ -34,7 +34,9 @@ export class UDashboard extends React.Component {
               <td>{Recipient}</td>
               <td>{organ}</td>
               <td>{city}</td>
+              <td>{district}</td>
               <td>{state}</td>
+              <td>{country}</td>
            </tr>
         )
      });

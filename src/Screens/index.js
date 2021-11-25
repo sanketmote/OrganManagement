@@ -9,3 +9,4 @@ export {DashBoard} from './HospitalScreens/DashBoard'
 export {ADashboard} from './Admin/ADashboard'
 export {HomePage} from './HomePage'
 export {Seeker} from './seeker'     
+export { CDashboard } from "./CDashboard";
