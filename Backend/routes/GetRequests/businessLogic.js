@@ -6,8 +6,8 @@ const getRequest = async function (req, res) {
     return await new Promise((resolve, reject) => {
         // var MicroServiceResponse = new MicroServiceResponse();
         try {
-            whichHospital = req.query.hid;
-            whichuserrole = req.query.userrole;
+            var whichHospital = req.query.hid;
+            var whichuserrole = req.query.userrole;
             if(whichuserrole === 'Donar'){
                 Donarrequest.find({hid:whichHospital}, function(err,data){
                     if(err) {
@@ -20,19 +20,26 @@ const getRequest = async function (req, res) {
                         // }
                         user.find({_id:data[0].uid})
                         .then(docs=>{
-                            res.status(200).send({
+                            console.log(docs)
+                            res.status(200).send([{
                                 fullName: docs[0].fullName,
                                 mobileno: docs[0].mobileno,
                                 email: docs[0].email,
                                 address: data[0].address,
                                 country: data[0].country,
+                                city:data[0].city,
                                 state: data[0].state,
                                 district: data[0].district,
                                 bloodgroup:data[0].bloodgroup,
                                 orgname: data[0].orgname,
                                 hid: data[0].hid,
                                 metamaskid: data[0].metamaskid,
-                            });
+                                date:data[0].date,
+                            }]);
+                        })
+                        .catch(err=>{
+                            console.log(err);
+                            res.status(400).send({message:"Not FOund"})
                         })
                         
                     }
@@ -43,11 +50,29 @@ const getRequest = async function (req, res) {
                         res.status(203).send({message:"Problem occured in database"});
                         throw err;
                     } else {
-                        console.log(data);
-                        // for(var i = 0; i < data.length; i++) {
-                        //     res.send(data)
-                        // }
-                        res.send(data)
+                        user.find({_id:data[0].uid})
+                        .then(docs=>{
+                            console.log(docs)
+                            res.status(200).send([{
+                                fullName: docs[0].fullName,
+                                mobileno: docs[0].mobileno,
+                                email: docs[0].email,
+                                address: data[0].address,
+                                country: data[0].country,
+                                city:data[0].city,
+                                state: data[0].state,
+                                district: data[0].district,
+                                bloodgroup:data[0].bloodgroup,
+                                orgname: data[0].orgname,
+                                hid: data[0].hid,
+                                metamaskid: data[0].metamaskid,
+                                date:data[0].date,
+                            }]);
+                        })
+                        .catch(err=>{
+                            console.log(err);
+                            res.status(400).send({message:"Not FOund"})
+                        })
                     }
                 })
             } else {

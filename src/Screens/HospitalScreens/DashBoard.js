@@ -16,7 +16,7 @@ export function DashBoard() {
     const [datafetched, setdatafetched] = useState(false);
     const [user, setUser] = useState({});
 
-    useEffect(async () => {
+    useEffect( async () => {
         require("../../styles/bootstrap.min.css");
         require("../../styles/tooplate.css");
         // debugger;
@@ -37,6 +37,7 @@ export function DashBoard() {
                 const DonarInfo =await instance.methods.Donors(donorid).call();
                 console.log(DonarInfo);
                 if(DonarInfo['hospitalid']===accounts[0]){
+                    console.log("Hello")
                     if(DonarInfo['added']==false){
                         Axios.get("http://localhost:4000/getrequest?hid="+DonarInfo['hospitalid']+"&userrole=Donar")
                         .then(result => {
@@ -44,9 +45,12 @@ export function DashBoard() {
                             setData(addData);
                             isdone = false;
                             cnt++;
-                            // console.log(addData);
+                            console.log(result);
                             // setdatafetched(true);
-                        });
+                        })
+                        .catch(err=>{
+                            console.log(err);
+                        })
                         // addData.push(DonarInfo);
                         // setData(addData);
                     }
@@ -104,6 +108,7 @@ export function DashBoard() {
                                                 <th scope="col">Donar Name</th>
                                                 <th scope="col" className="text-center">Organ</th>
                                                 <th scope="col">Request Date</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -172,17 +177,18 @@ export function DashBoard() {
                             <tr>
                                 <th>Hospital Name </th><td> {data[index] ? data[index].fullName : ''}</td>
                             </tr>
+                            
+                            <tr>
+                                <th>Blood Group </th><td> {data[index] ? data[index].bloodgroup : ''}</td>
+                            </tr>
+                            <tr>
+                                <th>Organ Name </th><td> {data[index] ? data[index].orgname : ''}</td>
+                            </tr>
                             <tr>
                                 <th>Email Id  </th><td> {data[index] ? data[index].email : ''}</td>
                             </tr>
                             <tr>
                                 <th>Mobile No  </th><td> {data[index] ? data[index].mobileno : ''}</td>
-                            </tr>
-                            <tr>
-                                <th>Address  </th><td> {data[index] ? data[index].address : ''}</td>
-                            </tr>
-                            <tr>
-                                <th>Country  </th><td> {data[index] ? data[index].country : ''}</td>
                             </tr>
                             <tr>
                                 <th>State  </th><td> {data[index] ? data[index].state : ''}</td>

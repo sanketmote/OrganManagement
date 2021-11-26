@@ -142,7 +142,7 @@ export function Transplant() {
                                             {data.map((item, index) => {
                                                 return <tr>
                                                     <th scope="row">{index}.</th>
-                                                    <td>{item.selecthospital}</td>
+                                                    <td>{item.fullName}</td>
                                                     <td>{item.orgname}</td>
                                                     <td>
                                                         <Button variant="info" onClick={() => toggleModal(item.metamaskid,index)} >
@@ -166,7 +166,7 @@ export function Transplant() {
                         <tbody>
 
                             <tr>
-                                <th>Hospital Name </th><td> {donardata[index] ? donardata[index].hosname : ''}</td>
+                                <th>Hospital Name </th><td> {donardata[index] ? donardata[index].fullName : ''}</td>
                             </tr>
                             <tr>
                                 <th>Email Id  </th><td> {donardata[index] ? donardata[index].email : ''}</td>
@@ -175,10 +175,10 @@ export function Transplant() {
                                 <th>Mobile No  </th><td> {donardata[index] ? donardata[index].mobileno : ''}</td>
                             </tr>
                             <tr>
-                                <th>Address  </th><td> {donardata[index] ? donardata[index].address : ''}</td>
+                                <th>Blood Group </th><td> {data[index] ? data[index].bloodgroup : ''}</td>
                             </tr>
                             <tr>
-                                <th>Country  </th><td> {donardata[index] ? donardata[index].country : ''}</td>
+                                <th>Organ Name </th><td> {data[index] ? data[index].orgname : ''}</td>
                             </tr>
                             <tr>
                                 <th>State  </th><td> {donardata[index] ? donardata[index].state : ''}</td>
