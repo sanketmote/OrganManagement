@@ -117,9 +117,7 @@ export class HRegister extends React.Component {
         window.location.href = link;
       } else {
         // creatRequestHospital
-        await instance.methods.creatRequestHospital(this.state.hname).send({from:accounts[0]});
-        const len =await instance.methods.gethospitalcount().call();
-        console.log(len);
+
         // alert(accounts[0])
         const registration = {
           hosname: this.state.hname,
@@ -138,14 +136,18 @@ export class HRegister extends React.Component {
           .then(res => {
             console.log(res);
             if (!res.data.message) {
-              var link = '/login'
-              window.location.href = link;
+              console.log("ok")
             } else {
               alert(res.data.message);
             }
 
           })
           .catch(err => console.log(err));
+        await instance.methods.creatRequestHospital(this.state.hname).send({ from: accounts[0] });
+        var link = '/login'
+        window.location.href = link;
+        const len = await instance.methods.gethospitalcount().call();
+        console.log(len);
         // await instance.methods.creatRequestHospital(this.state.hname).send({ from: accounts[0], gasPrice: "210000" });
       }
     } catch (err) {
