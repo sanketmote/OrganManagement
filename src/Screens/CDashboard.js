@@ -12,11 +12,15 @@ import instance from "../Etherium/contrctInstance";
 var isdone = false;
 const user = {}
 var index = null;
+
 export function CDashboard() {
     const [data, setData] = useState([]);
     const [isOpen, setisOpen] = useState(false);
     const [datafetched, setdatafetched] = useState(false);
     const [user, setUser] = useState({});
+    const [donar, setdonar] = useState(false)
+    const [seeker, setseeker] = useState(false)
+    const [profile, setprofile] = useState(true);
     useEffect(async () => {
         require("../styles/bootstrap.min.css");
         require("../styles/tooplate.css");
@@ -24,12 +28,12 @@ export function CDashboard() {
         const tmpUser = await AuthService.getCurrentUser()
         setUser(tmpUser);
         console.log(tmpUser)
-        if (tmpUser) {
+        if (profile &&tmpUser) {
             // if (tmpUser.roles == "user") {
             const len = await instance.methods.gethospitalcount().call();
             var cnt = 0;
             const adddata = [];
-            if(tmpUser.firstTime === true) {
+            if (tmpUser.firstTime === true) {
                 var link = '/donar'
                 window.location.href = link;
             }
@@ -75,6 +79,38 @@ export function CDashboard() {
         AuthService.logout();
     }
 
+    function seek() {
+        var cnt = 0;
+
+        Axios
+            .get("http://localhost:4000/getDetails?role=Seeker")
+            .then(result => {
+                cnt++;
+                console.log(result);
+
+                setData(result.data);
+                setdatafetched(true);
+            });
+        setdonar(false)
+        setseeker(true);
+        setprofile(false);
+    }
+    function donate() {
+        var cnt = 0;
+        Axios
+            .get("http://localhost:4000/getDetails?role=Donar")
+            .then(result => {
+                cnt++;
+                console.log(result);
+
+                setData(result.data);
+                setdatafetched(true);
+            });
+        setdonar(true)
+        setseeker(false);
+        setprofile(false);
+    }
+
     if (!datafetched) {
         return (
             <Hypnosis />
@@ -92,12 +128,12 @@ export function CDashboard() {
 
                                     </div> */}
                                     <div className="col-md-8 col-sm-12">
-                                        <a href="/donar"><Button variant="info" className="btn btn-small btn-primary space">
+                                        <Button variant="info" className="btn btn-small btn-primary space" onClick={() => donate()}>
                                             Donar
-                                        </Button></a>
-                                        <a href="/seeker"><Button variant="info" className="btn btn-small btn-primary space">
+                                        </Button>
+                                        <Button variant="info" className="btn btn-small btn-primary space" onClick={() => seek()}>
                                             Seeker
-                                        </Button></a>
+                                        </Button>
                                     </div>
                                     <div className="col-md-4 col-sm-12 text-right">
                                         <Button variant="info" className="btn btn-small btn-primary" onClick={() => logout(index)} >
@@ -107,7 +143,62 @@ export function CDashboard() {
                                     </div>
                                 </div>
                                 <div className="table-responsive" >
-                                    <table className="table table-hover table-striped tm-table-striped-even mt-3">
+                                    {seeker === true ? <div className="table-responsive">
+                                        <table className="table table-hover table-striped tm-table-striped-even mt-3">
+                                            <thead>
+                                                <tr className="tm-bg-gray">
+                                                    <th scope="col">sr no</th>
+                                                    <th scope="col">Seeker Name</th>
+                                                    <th scope="col" className="text-center">Organ</th>
+                                                    <th scope="col">Blood Group</th>
+                                                    <th scope="col">state</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                {data.map((item, index) => {
+                                                    return <tr>
+                                                        <th scope="row">{index}.</th>
+                                                        <td>{item.fullName}</td>
+                                                        <td>{item.orgname}</td>
+                                                        <td>{item.bloodgroup}</td>
+                                                        <td>{item.state}</td>
+                                                    </tr>
+                                                })}
+
+                                            </tbody>
+                                        </table>
+                                        {isdone === true ? <div className="isdone">No Current Request in Inbox</div> : <div></div>}
+                                    </div> : <div></div>}
+                                    {donar === true ? <div className="table-responsive">
+                                        <table className="table table-hover table-striped tm-table-striped-even mt-3">
+                                            <thead>
+                                                <tr className="tm-bg-gray">
+                                                    <th scope="col">sr no</th>
+                                                    <th scope="col">Donar Name</th>
+                                                    <th scope="col" className="text-center">Organ</th>
+                                                    <th scope="col">Blood Group</th>
+                                                    <th scope="col">state</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                {data.map((item, index) => {
+                                                    return <tr>
+                                                        <th scope="row">{index}.</th>
+                                                        <td>{item.fullName}</td>
+                                                        <td>{item.orgname}</td>
+                                                        <td>{item.bloodgroup}</td>
+                                                        <td>{item.state}</td>
+                                                    </tr>
+                                                })}
+
+                                            </tbody>
+                                        </table>
+                                        {isdone === true ? <div className="isdone">No Current Request in Inbox</div> : <div></div>}
+                                    </div> : <div></div>}
+                                    {profile === true ? <div>
+                                        <table className="table table-hover table-striped tm-table-striped-even mt-3">
                                         <thead>
                                             <tr className="tm-bg-gray">
                                                 <th scope="col">ID</th>
@@ -141,6 +232,8 @@ export function CDashboard() {
                                     </table>
                                     {isdone === true ? <div className="isdone">No Current Request in Inbox</div> : <div></div>}
 
+                                    </div>: <div></div>}
+                                    
                                 </div>
 
                                 {/* <div className="tm-table-mt tm-table-actions-row">

@@ -33,7 +33,29 @@ const getUserDetails = async function (req, res) {
                         res.status(500).send({ message: "User Not found" });
                     }
                 }
-            }          
+            }  else {
+                if (req.query.role === 'Donar') {
+                    getDonar.find({})
+                        .then(data => {
+                            res.status(200).send(data);
+                        })
+                        .catch(err => {
+                            res.status(203).send({ message: err });
+                        })
+                } else {
+                    if (req.query.role === 'Seeker') {
+                        getSeeker.find({})
+                            .then(data => {
+                                res.status(200).send(data);
+                            })
+                            .catch(err => {
+                                res.status(203).send({ message: err });
+                            })
+                    } else{
+                        res.status(500).send({ message: "User Not found" });
+                    }
+                }
+            }         
 
         } catch (err) {
             console.log('Error catched in Finding Hospitals in Database : ' + err.name + " : " + err.message);
