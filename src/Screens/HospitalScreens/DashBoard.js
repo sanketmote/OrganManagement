@@ -107,7 +107,7 @@ export function DashBoard() {
                                         {data.map((item, index) => {
                                                 return <tr>
                                                     <th scope="row">{index}.</th>
-                                                    <td>{item.selecthospital}</td>
+                                                    <td>{item.fullName}</td>
                                                     <td>{item.orgname}</td>
                                                     <td>{item.date}</td>
                                                     {/* <td onClick={openDropDown} >verifyhospital</td>
