@@ -51,7 +51,7 @@ export class Login extends React.Component {
       // metamaskid: this.state.metamaskid,
       password: this.state.password,
     }
-
+    console.log(loginval);
     const res = await AuthService.login(loginval);
     if(!res.message){
       // alert('Logging .. ');

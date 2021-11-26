@@ -523,3 +523,7 @@ footer {
   text-align: center;
   color: rgb(255, 72, 0)
 }
+
+.space {
+  margin:5px;
+}

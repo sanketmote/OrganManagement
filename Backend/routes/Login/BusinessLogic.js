@@ -39,6 +39,7 @@ const login = async function (req, res) {
                                 mobileno: docs[0].mobileno,
                                 email: docs[0].email,
                                 roles: 'users',
+                                firstTime:docs[0].firstTime,
                                 accessToken: token
                             });
                         }

@@ -24,7 +24,7 @@ export class Donar extends React.Component {
       state1: 'Andhra Pradesh',
       district: 'Anantapur',
       hid: '',
-      role:'',
+      role: '',
       hospitalvalue: [],
       keydatahos: []
     }
@@ -130,69 +130,136 @@ export class Donar extends React.Component {
   async onSubmit(event) {
     event.preventDefault()
     try {
-      const accounts = await web3.eth.getAccounts();
-      const user = AuthService.getCurrentUser();
-      if (!accounts[0]) {
-        alert("Please add metamaskid")
-        var link = '#'
-        window.location.href = link;
-      } else {
-        alert(accounts[0]);
-        const formData = new FormData();
-
-        // Update the formData object
-        formData.append(
-          "myFile",
-          this.state.selectedFile,
-          this.state.selectedFile.name
-        );
-
-        for (var i = 0; i < this.state.keydatahos.data.length; i++) {
-          if (this.state.keydatahos.data[i] === this.state.selecthospital) {
-            this.state.hid = this.state.keydatahos.key[i];
-            break;
-          }
-        }
-
-        if (this.state.hid === '') {
-          alert("Hospital is not selected" + this.state.selecthospital)
+      if (this.state.role === 'donar') {
+        const accounts = await web3.eth.getAccounts();
+        const user = AuthService.getCurrentUser();
+        if (!accounts[0]) {
+          alert("Please add metamaskid")
+          var link = '#'
+          window.location.href = link;
         } else {
-          await instance.methods.creatRequestDonar(this.state.hid, this.state.orgname, this.state.bloodgroup).send({ from: accounts[0] });
-          const len = await instance.methods.getDonorcount().call();
-          console.log(len);
-          const registration = {
-            fullName: this.state.fullName,
-            bloodgroup: this.state.bloodgroup,
-            selecthospital: this.state.selecthospital,
-            metamaskid: accounts[0],
-            orgname: this.state.orgname,
-            // selectedFile: this.state.selectedFile,
-            city: this.state.city,
-            district: this.state.district,
-            state: this.state.state1,
-            hid: this.state.hid,
-            uid: user.id,
+          alert(accounts[0]);
+          const formData = new FormData();
+
+          // Update the formData object
+          formData.append(
+            "myFile",
+            this.state.selectedFile,
+            this.state.selectedFile.name
+          );
+
+          for (var i = 0; i < this.state.keydatahos.data.length; i++) {
+            if (this.state.keydatahos.data[i] === this.state.selecthospital) {
+              this.state.hid = this.state.keydatahos.key[i];
+              break;
+            }
           }
 
-          axios.post('http://localhost:4000/ad/', registration)   /// After Hosting change to hosted backend name
-            .then(res => {
-              if (!res.data.message) {
-                var link = '/'
-                window.location.href = link;
-              } else {
-                alert(res.data.message);
-              }
+          if (this.state.hid === '') {
+            alert("Hospital is not selected" + this.state.selecthospital)
+          } else {
+            await instance.methods.creatRequestDonar(this.state.hid, this.state.orgname, this.state.bloodgroup).send({ from: accounts[0] });
+            const len = await instance.methods.getDonorcount().call();
+            console.log(len);
+            const registration = {
+              fullName: this.state.fullName,
+              bloodgroup: this.state.bloodgroup,
+              selecthospital: this.state.selecthospital,
+              metamaskid: accounts[0],
+              orgname: this.state.orgname,
+              // selectedFile: this.state.selectedFile,
+              city: this.state.city,
+              district: this.state.district,
+              state: this.state.state1,
+              hid: this.state.hid,
+              uid: user.id,
+            }
 
-            })
-            .catch(err => {
-              console.log(err);
-              alert("Err -> " + err);
-            });
+            axios.post('http://localhost:4000/ad/', registration)   /// After Hosting change to hosted backend name
+              .then(res => {
+                if (!res.data.message) {
+                  var link = '/'
+                  window.location.href = link;
+                } else {
+                  alert(res.data.message);
+                }
+
+              })
+              .catch(err => {
+                console.log(err);
+                alert("Err -> " + err);
+              });
+          }
+
         }
+      } else {
+        const accounts = await web3.eth.getAccounts();
+        const user = AuthService.getCurrentUser();
+        if (!accounts[0]) {
+          alert("Please add metamaskid")
+          var link = '#'
+          window.location.href = link;
+        } else {
+          alert(accounts[0]);
+          const formData = new FormData();
+          console.log("hello1 ");
+          // Update the formData object
+          formData.append(
+            "myFile",
+            this.state.selectedFile,
+            this.state.selectedFile.name
+          );
 
+          for (var i = 0; i < this.state.keydatahos.data.length; i++) {
+            if (this.state.keydatahos.data[i] === this.state.selecthospital) {
+              this.state.hid = this.state.keydatahos.key[i];
+              break;
+            }
+          }
+          console.log("Hello2");
+
+          if (this.state.hid === '') {
+            alert("Hospital is not selected" + this.state.selecthospital)
+          } else {
+            console.log("Hello3");
+            await instance.methods.creatRequestRecipient(this.state.hid, this.state.orgname, this.state.bloodgroup).send({ from: accounts[0] });
+            const len = await instance.methods.getrecipientcount().call();
+            console.log(len);
+            const registration = {
+              fullName: this.state.fullName,
+              bloodgroup: this.state.bloodgroup,
+              selecthospital: this.state.selecthospital,
+              metamaskid: accounts[0],
+              orgname: this.state.orgname,
+              // selectedFile: this.state.selectedFile,
+              city: this.state.city,
+              district: this.state.district,
+              state: this.state.state1,
+              hid: this.state.hid,
+              uid: user.id,
+            }
+
+            axios.post('http://localhost:4000/as/', registration)   /// After Hosting change to hosted backend name
+              .then(res => {
+                if (!res.data.message) {
+                  var link = '/'
+                  window.location.href = link;
+                } else {
+                  alert(res.data.message);
+                }
+
+              })
+              .catch(err => {
+                console.log(err);
+                alert("Err -> " + err);
+              });
+          }
+
+        }
       }
-    } catch (e) {
 
+    } catch (e) {
+      alert(e.message);
     }
 
 
@@ -217,7 +284,7 @@ export class Donar extends React.Component {
                 <select className="input100" name="role" id="role" onChange={this.changerole} value={this.state.role}>
                   <option value="donar">Donar</option>
                   <option value="seeker">Seeker</option>
-                  
+
                 </select>
 
                 <span className="focus-input100" data-symbol="&#xf206;"></span>

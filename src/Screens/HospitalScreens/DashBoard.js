@@ -6,6 +6,9 @@ import { Table, Button } from 'react-bootstrap';
 import AuthService from "../../services/auth.service";
 import instance from "../../Etherium/contrctInstance";
 import web3 from "../../Etherium/web";
+var isdone = false;
+var index = null;
+
 export function DashBoard() {
     const [data, setData] = useState([]);
     const [isOpen, setisOpen] = useState(false);
@@ -16,6 +19,8 @@ export function DashBoard() {
         require("../../styles/bootstrap.min.css");
         require("../../styles/tooplate.css");
         // debugger;
+        var cnt = 0;
+
         const accounts= await web3.eth.getAccounts();
         const tmpUser = await AuthService.getCurrentUser()
         setUser(tmpUser);
@@ -32,11 +37,13 @@ export function DashBoard() {
                 console.log(DonarInfo);
                 if(DonarInfo['hospitalid']===accounts[0]){
                     if(DonarInfo['added']==false){
-                        Axios.get("http://localhost:4000/getrequest?hid="+DonarInfo['hospitalid'])
+                        Axios.get("http://localhost:4000/getrequest?hid="+DonarInfo['hospitalid']+"&userrole=Donar")
                         .then(result => {
                             addData.push(result.data[0])
                             setData(addData);
-                            console.log(addData);
+                            isdone = false;
+                            cnt++;
+                            // console.log(addData);
                             // setdatafetched(true);
                         });
                         // addData.push(DonarInfo);
@@ -50,9 +57,17 @@ export function DashBoard() {
         //     .then(result => setData(result.data));
         // console.log(data);
         // debugger;
+        if (cnt == 0) {
+            isdone = true;
+            setdatafetched(true);
+        }
         setdatafetched(true);
 
     }, []);
+
+    function logout() {
+        AuthService.logout();
+    }
 
     if (!datafetched) {
         return (
@@ -66,12 +81,15 @@ export function DashBoard() {
                         <div className="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
                             <div className="bg-white tm-block h-100">
                                 <div className="row">
-                                    <div className="col-md-8 col-sm-12">
+                                    <div className="col-md-6 col-sm-12">
                                         <h2 className="tm-block-title d-inline-block"> Requests </h2>
 
                                     </div>
-                                    <div className="col-md-4 col-sm-12 text-right">
-                                        <a href="#" className="btn btn-small btn-primary">Recipents</a>
+                                    <div className="col-md-6 col-sm-12 text-right">
+                                        <a href="Transplant" className="btn btn-small btn-primary space">Transplant</a>
+                                        <Button variant="info" className="btn btn-small btn-primary space" onClick={() => logout(index)} >
+                                            Logout
+                                        </Button>
                                     </div>
                                 </div>
                                 <div className="table-responsive">
@@ -99,6 +117,7 @@ export function DashBoard() {
 
                                         </tbody>
                                     </table>
+                                    {isdone === true ? <div className="isdone">No Current Request in Inbox</div> : <div></div>}
                                 </div>
 
                                 {/* <div className="tm-table-mt tm-table-actions-row">

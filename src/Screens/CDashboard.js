@@ -28,15 +28,19 @@ export function CDashboard() {
         if (tmpUser) {
             // if (tmpUser.roles == "user") {
             const len = await instance.methods.gethospitalcount().call();
-            var cnt =0;
+            var cnt = 0;
             const adddata = [];
+            if(tmpUser.firstTime === true) {
+                var link = '/donar'
+                window.location.href = link;
+            }
             // for (var i = 0; i < len; i++) {
             // const hid = await instance.methods.hospitalarr(i).call();
             // const hinfo = await instance.methods.hospital(hid).call();
             // if (hinfo['added'] == false) {
-            
+
             Axios
-                .get("http://localhost:4000/getDetails?id=" + tmpUser.id +"&role=Donar")
+                .get("http://localhost:4000/getDetails?id=" + tmpUser.id + "&role=Donar")
                 .then(result => {
                     cnt++;
                     console.log(result);
@@ -89,10 +93,10 @@ export function CDashboard() {
 
                                     </div> */}
                                     <div className="col-md-8 col-sm-12">
-                                        <a href="/donar"><Button variant="info" className="btn btn-small btn-primary">
+                                        <a href="/donar"><Button variant="info" className="btn btn-small btn-primary space">
                                             Donar
                                         </Button></a>
-                                        <a href="/seeker"><Button variant="info" className="btn btn-small btn-primary">
+                                        <a href="/seeker"><Button variant="info" className="btn btn-small btn-primary space">
                                             Seeker
                                         </Button></a>
                                     </div>

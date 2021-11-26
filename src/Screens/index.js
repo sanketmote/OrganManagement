@@ -10,3 +10,4 @@ export {ADashboard} from './Admin/ADashboard'
 export {HomePage} from './HomePage'
 export {Seeker} from './seeker'     
 export { CDashboard } from "./CDashboard";
+export {Transplant} from './HospitalScreens/Transplant'

@@ -39,6 +39,7 @@ export function ADashboard() {
                                 adddata.push(result.data[0])
                                 setData(adddata);
                                 setdatafetched(true);
+                                isdone = false;
                             });
                     }
                 }
