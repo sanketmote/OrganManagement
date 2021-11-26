@@ -24,7 +24,7 @@ export class Donar extends React.Component {
       state1: 'Andhra Pradesh',
       district: 'Anantapur',
       hid: '',
-      role: '',
+      role: 'donar',
       hospitalvalue: [],
       keydatahos: []
     }
@@ -158,7 +158,6 @@ export class Donar extends React.Component {
           if (this.state.hid === '') {
             alert("Hospital is not selected" + this.state.selecthospital)
           } else {
-            await instance.methods.creatRequestDonar(this.state.hid, this.state.orgname, this.state.bloodgroup).send({ from: accounts[0] });
             const len = await instance.methods.getDonorcount().call();
             console.log(len);
             const registration = {
@@ -178,8 +177,7 @@ export class Donar extends React.Component {
             axios.post('http://localhost:4000/ad/', registration)   /// After Hosting change to hosted backend name
               .then(res => {
                 if (!res.data.message) {
-                  var link = '/'
-                  window.location.href = link;
+                  console.log("ok");
                 } else {
                   alert(res.data.message);
                 }
@@ -189,6 +187,9 @@ export class Donar extends React.Component {
                 console.log(err);
                 alert("Err -> " + err);
               });
+              await instance.methods.creatRequestDonar(this.state.hid, this.state.orgname, this.state.bloodgroup).send({ from: accounts[0] });
+              var link = '/'
+              window.location.href = link;
           }
 
         }
@@ -221,10 +222,6 @@ export class Donar extends React.Component {
           if (this.state.hid === '') {
             alert("Hospital is not selected" + this.state.selecthospital)
           } else {
-            console.log("Hello3");
-            await instance.methods.creatRequestRecipient(this.state.hid, this.state.orgname, this.state.bloodgroup).send({ from: accounts[0] });
-            const len = await instance.methods.getrecipientcount().call();
-            console.log(len);
             const registration = {
               fullName: this.state.fullName,
               bloodgroup: this.state.bloodgroup,
@@ -242,8 +239,7 @@ export class Donar extends React.Component {
             axios.post('http://localhost:4000/as/', registration)   /// After Hosting change to hosted backend name
               .then(res => {
                 if (!res.data.message) {
-                  var link = '/'
-                  window.location.href = link;
+                  console.log("ok")
                 } else {
                   alert(res.data.message);
                 }
@@ -253,6 +249,11 @@ export class Donar extends React.Component {
                 console.log(err);
                 alert("Err -> " + err);
               });
+            await instance.methods.creatRequestRecipient(this.state.hid, this.state.orgname, this.state.bloodgroup).send({ from: accounts[0] });
+            const len = await instance.methods.getrecipientcount().call();
+            console.log(len);
+            var link = '/'
+            window.location.href = link;
           }
 
         }

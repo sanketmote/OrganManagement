@@ -123,7 +123,7 @@ export default class App extends React.Component {
                 </Route>
 
                 <Route path="/CDashboard">
-                  {isloggedIn && users ? <Redirect to='/CDashboard' /> : <Redirect to='/CDashboard' /> }
+                  {isloggedIn && users ? <CDashboard />  : <Redirect to='/' /> }
                   {/* <CDashboard /> */}
                 </Route>
 

@@ -8,7 +8,6 @@ import Hypnosis from "./loader";
 import { Table, Button } from 'react-bootstrap';
 import AuthService from "../services/auth.service";
 import instance from "../Etherium/contrctInstance";
-import { render } from "@testing-library/react";
 
 var isdone = false;
 const user = {}

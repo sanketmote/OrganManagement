@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Axios from 'axios'
 import pic from "../../Images/admin.png";
 import Hypnosis from "../loader";
+import Modal from '../../services/Model';
 import { Table, Button } from 'react-bootstrap';
 import AuthService from "../../services/auth.service";
 import instance from "../../Etherium/contrctInstance";
@@ -68,7 +69,10 @@ export function DashBoard() {
     function logout() {
         AuthService.logout();
     }
-
+    function toggleModal(id) {
+        index = id;
+        setisOpen(!isOpen);
+    }
     if (!datafetched) {
         return (
             <Hypnosis />
@@ -110,8 +114,11 @@ export function DashBoard() {
                                                     <td>{item.fullName}</td>
                                                     <td>{item.orgname}</td>
                                                     <td>{item.date}</td>
-                                                    {/* <td onClick={openDropDown} >verifyhospital</td>
-                                                    {open === true ? openList : null} */}
+                                                    <td>
+                                                        <Button variant="info" onClick={() => toggleModal(index)} >
+                                                            Details
+                                                        </Button>
+                                                    </td>
                                                 </tr>
                                             })}
 
@@ -156,6 +163,40 @@ export function DashBoard() {
 
                     </div>
                 </div>
+
+                <Modal show={isOpen}
+                    onClose={() => toggleModal({ index })} metamaskid={data[index] ? data[index].metamaskid : ''}>
+                    <Table className="table">
+                        <tbody>
+
+                            <tr>
+                                <th>Hospital Name </th><td> {data[index] ? data[index].fullName : ''}</td>
+                            </tr>
+                            <tr>
+                                <th>Email Id  </th><td> {data[index] ? data[index].email : ''}</td>
+                            </tr>
+                            <tr>
+                                <th>Mobile No  </th><td> {data[index] ? data[index].mobileno : ''}</td>
+                            </tr>
+                            <tr>
+                                <th>Address  </th><td> {data[index] ? data[index].address : ''}</td>
+                            </tr>
+                            <tr>
+                                <th>Country  </th><td> {data[index] ? data[index].country : ''}</td>
+                            </tr>
+                            <tr>
+                                <th>State  </th><td> {data[index] ? data[index].state : ''}</td>
+                            </tr>
+                            <tr>
+                                <th>District  </th><td> {data[index] ? data[index].district : ''}</td>
+                            </tr>
+                            <tr>
+                                <th>City  </th><td> {data[index] ? data[index].city : ''}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
+
+                </Modal>
             </div>
 
         );
