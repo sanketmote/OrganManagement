@@ -6,6 +6,10 @@ const DonorSchema = new mongoose.Schema({
         allowNull: false,
         foreignKey: true,
     },
+    fullName: {
+        type: String,
+        allowNull: false,
+    },
     bloodgroup: {
         type: String,
         allowNull: false,
