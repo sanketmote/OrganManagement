@@ -112,7 +112,7 @@ export function CDashboard() {
     }
 
     if (!datafetched) {
-        return (
+        return (    
             <Hypnosis />
         )
     } else {
